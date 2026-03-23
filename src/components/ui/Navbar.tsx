@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { MagneticButton } from "@/components/ui/MagneticButton";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -75,13 +76,15 @@ export function Navbar() {
               {link.label}
             </a>
           ))}
-          <a
-            href="#contact"
-            onClick={(e) => handleClick(e, "#contact")}
-            className="rounded-md bg-primary-container px-5 py-2 text-sm font-body font-semibold text-on-primary hover:bg-primary transition-colors duration-300"
-          >
-            Contact
-          </a>
+          <MagneticButton strength={0.25} radius={80}>
+            <a
+              href="#contact"
+              onClick={(e) => handleClick(e, "#contact")}
+              className="rounded-md bg-primary-container px-5 py-2 text-sm font-body font-semibold text-on-primary hover:bg-primary transition-colors duration-300"
+            >
+              Contact
+            </a>
+          </MagneticButton>
         </div>
 
         {/* Mobile hamburger */}

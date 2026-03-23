@@ -1,4 +1,5 @@
 import { HeroCanvas } from "@/components/three/HeroCanvas";
+import { MagneticButton } from "@/components/ui/MagneticButton";
 
 export function Hero() {
   return (
@@ -43,22 +44,24 @@ export function Hero() {
         </p>
 
         {/* CTA button */}
-        <a
-          href="#contact"
-          className="group flex items-center gap-3 rounded-md bg-primary-container px-8 py-4 text-base font-semibold text-on-primary transition-all duration-300 hover:shadow-[0_0_30px_rgba(242,202,80,0.25)]"
-        >
-          Start Your Project
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 -960 960 960"
-            fill="currentColor"
-            className="transition-transform duration-300 group-hover:translate-x-1"
+        <MagneticButton>
+          <a
+            href="#contact"
+            className="group flex items-center gap-3 rounded-md bg-primary-container px-8 py-4 text-base font-semibold text-on-primary transition-all duration-300 hover:shadow-[0_0_30px_rgba(242,202,80,0.25)]"
           >
-            <path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z" />
-          </svg>
-        </a>
+            Start Your Project
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 -960 960 960"
+              fill="currentColor"
+              className="transition-transform duration-300 group-hover:translate-x-1"
+            >
+              <path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z" />
+            </svg>
+          </a>
+        </MagneticButton>
       </div>
 
       {/* Scroll-to-explore hint */}

@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { TextReveal } from "@/components/ui/TextReveal";
 
 // ─── Material Symbols Outlined (viewBox 0 -960 960 960) ───
 
@@ -99,7 +100,7 @@ export function Services() {
         <div className="mb-16 flex flex-col justify-between gap-8 md:flex-row md:items-end">
           <div>
             <h2 className="font-headline text-4xl font-bold text-on-surface md:text-5xl">
-              Core Expertise
+              <TextReveal>Core Expertise</TextReveal>
             </h2>
             <div className="mt-4 h-1 w-24 bg-primary" />
           </div>
@@ -121,10 +122,10 @@ export function Services() {
             <motion.div
               key={service.title}
               variants={cardVariants}
-              className={`group relative flex min-h-[400px] flex-col justify-between overflow-hidden border-t p-10 transition-colors duration-300 ${
+              className={`group relative flex min-h-[400px] flex-col justify-between overflow-hidden border-t p-10 transition-all duration-300 hover:-translate-y-1 ${
                 service.featured
-                  ? "sigil-glow border-t-primary/20 bg-surface-container-high hover:bg-surface-container"
-                  : "border-outline-variant/10 bg-surface-container-low hover:bg-surface-container"
+                  ? "sigil-glow border-t-primary/20 bg-surface-container-high hover:border-t-primary/40 hover:bg-surface-container"
+                  : "border-outline-variant/10 bg-surface-container-low hover:border-t-primary/30 hover:bg-surface-container"
               }`}
             >
               {/* Featured badge */}

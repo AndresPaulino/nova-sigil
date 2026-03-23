@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect, useMemo } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
+import { useReducedMotion } from "@/lib/useReducedMotion";
 import { PerformanceMonitor } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { gsap } from "gsap";
@@ -16,6 +17,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 function SigilMesh() {
   const meshRef = useRef<THREE.Mesh>(null);
+  const materialRef = useRef<THREE.ShaderMaterial>(null);
   const scrollProgress = useRef(0);
 
   const uniforms = useMemo(
@@ -26,6 +28,14 @@ function SigilMesh() {
     }),
     [],
   );
+
+  // Dispose ShaderMaterial + geometry on unmount
+  useEffect(() => {
+    return () => {
+      materialRef.current?.dispose();
+      meshRef.current?.geometry.dispose();
+    };
+  }, []);
 
   // Bind scroll offset → uStrength via GSAP ScrollTrigger (Lenis-synced)
   useEffect(() => {
@@ -45,15 +55,12 @@ function SigilMesh() {
   useFrame((state) => {
     const elapsed = state.clock.elapsedTime;
 
-    // Animate time
     uniforms.uTime.value = elapsed;
 
-    // Smooth-lerp scroll progress into distortion strength (0.3 → 1.0)
     const target = 0.3 + scrollProgress.current * 0.7;
     uniforms.uStrength.value +=
       (target - uniforms.uStrength.value) * 0.1;
 
-    // Gentle rotation
     if (meshRef.current) {
       meshRef.current.rotation.y = elapsed * 0.15;
       meshRef.current.rotation.x = Math.sin(elapsed * 0.1) * 0.1;
@@ -64,6 +71,7 @@ function SigilMesh() {
     <mesh ref={meshRef} scale={[0.7, 0.7, 0.7]}>
       <icosahedronGeometry args={[1, 64]} />
       <shaderMaterial
+        ref={materialRef}
         vertexShader={vertexShader}
         fragmentShader={fragmentShader}
         uniforms={uniforms}
@@ -105,28 +113,39 @@ function CameraRig() {
 
 export function HeroScene() {
   const [dpr, setDpr] = useState(1.5);
+  const [bloomEnabled, setBloomEnabled] = useState(true);
+  const reducedMotion = useReducedMotion();
 
   return (
     <Canvas
-      dpr={dpr}
+      dpr={[1, dpr]}
+      frameloop={reducedMotion ? "demand" : "always"}
       camera={{ position: [0, 0, 3], fov: 45 }}
       gl={{ antialias: true, alpha: true }}
       style={{ position: "absolute", inset: 0 }}
     >
       <PerformanceMonitor
-        onDecline={() => setDpr(1)}
-        onIncline={() => setDpr(1.5)}
+        onDecline={() => {
+          setDpr(1);
+          setBloomEnabled(false);
+        }}
+        onIncline={() => {
+          setDpr(1.5);
+          setBloomEnabled(true);
+        }}
       >
         <CameraRig />
         <SigilMesh />
-        <EffectComposer>
-          <Bloom
-            mipmapBlur
-            luminanceThreshold={1.5}
-            intensity={0.8}
-            radius={0.3}
-          />
-        </EffectComposer>
+        {bloomEnabled && (
+          <EffectComposer>
+            <Bloom
+              mipmapBlur
+              luminanceThreshold={1.5}
+              intensity={0.8}
+              radius={0.3}
+            />
+          </EffectComposer>
+        )}
       </PerformanceMonitor>
     </Canvas>
   );
