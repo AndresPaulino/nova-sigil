@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Space_Grotesk, Manrope } from 'next/font/google'
 import "./globals.css";
+
+
+const headline = Space_Grotesk({ subsets: ['latin'], variable: '--font-headline' })
+const body = Manrope({ subsets: ['latin'], variable: '--font-body' })
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
