@@ -9,7 +9,7 @@ vec3 cosPalette(float t, vec3 a, vec3 b, vec3 c, vec3 d) {
 
 void main() {
   // Palette: gold highlights → navy shadows
-  vec3 a = vec3(0.95, 0.79, 0.31);
+  vec3 a = vec3(0.85, 0.72, 0.25);
   vec3 b = vec3(0.3);
   vec3 c = vec3(0.5, 0.5, 0.9);
   vec3 d = vec3(0.05, 0.08, 0.13);
@@ -19,10 +19,13 @@ void main() {
 
   // Fresnel rim to accentuate edges
   float fresnel = pow(1.0 - abs(dot(vNormal, vec3(0.0, 0.0, 1.0))), 2.0);
-  color += fresnel * vec3(0.95, 0.79, 0.31) * 0.4;
+  color += fresnel * vec3(0.85, 0.72, 0.25) * 0.3;
 
-  // Boost intensity so values exceed 1.0 for HDR bloom
-  color *= 1.5;
+  // Gentle boost for HDR bloom pickup on bright edges
+  color *= 1.0;
 
-  gl_FragColor = vec4(color, 1.0);
+  // Low-distortion areas nearly transparent, high-distortion semi-transparent
+  float alpha = smoothstep(0.0, 0.5, abs(vDistortion)) * 0.6;
+
+  gl_FragColor = vec4(color, alpha);
 }

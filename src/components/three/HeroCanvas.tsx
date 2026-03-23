@@ -16,5 +16,9 @@ const HeroScene = dynamic(
 );
 
 export function HeroCanvas() {
-  return <HeroScene />;
+  return (
+    <div className="absolute inset-0 opacity-60">
+      <HeroScene />
+    </div>
+  );
 }

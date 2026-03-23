@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/ui/Navbar";
 import { Hero } from "@/components/sections/Hero";
+import { Services } from "@/components/sections/Services";
 
 export default function Home() {
   return (
@@ -9,12 +10,7 @@ export default function Home() {
       <main>
         <Hero />
 
-        {/* Services */}
-        <section id="services" className="min-h-screen px-6 py-32">
-          <h2 className="font-headline text-3xl font-bold text-on-surface md:text-5xl">
-            Services
-          </h2>
-        </section>
+        <Services />
 
         {/* Projects */}
         <section id="projects" className="min-h-screen px-6 py-32">

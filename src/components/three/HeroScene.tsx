@@ -61,13 +61,17 @@ function SigilMesh() {
   });
 
   return (
-    <mesh ref={meshRef}>
+    <mesh ref={meshRef} scale={[0.7, 0.7, 0.7]}>
       <icosahedronGeometry args={[1, 64]} />
       <shaderMaterial
         vertexShader={vertexShader}
         fragmentShader={fragmentShader}
         uniforms={uniforms}
         toneMapped={false}
+        wireframe
+        transparent
+        blending={THREE.AdditiveBlending}
+        depthWrite={false}
       />
     </mesh>
   );
@@ -118,9 +122,9 @@ export function HeroScene() {
         <EffectComposer>
           <Bloom
             mipmapBlur
-            luminanceThreshold={1}
-            intensity={2}
-            radius={0.4}
+            luminanceThreshold={1.5}
+            intensity={0.8}
+            radius={0.3}
           />
         </EffectComposer>
       </PerformanceMonitor>
