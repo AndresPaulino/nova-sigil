@@ -1,3 +1,5 @@
+uniform float uOpacity;
+
 varying float vDistortion;
 varying vec3 vNormal;
 
@@ -26,6 +28,8 @@ void main() {
 
   // Low-distortion areas nearly transparent, high-distortion semi-transparent
   float alpha = smoothstep(0.0, 0.5, abs(vDistortion)) * 0.6;
+
+  alpha *= uOpacity;
 
   gl_FragColor = vec4(color, alpha);
 }

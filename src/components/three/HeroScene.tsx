@@ -25,6 +25,7 @@ function SigilMesh() {
       uTime: { value: 0 },
       uStrength: { value: 0.3 },
       uDensity: { value: 1.5 },
+      uOpacity: { value: 1.0 },
     }),
     [],
   );
@@ -61,9 +62,20 @@ function SigilMesh() {
     uniforms.uStrength.value +=
       (target - uniforms.uStrength.value) * 0.1;
 
+    // Scroll exit: 0.7→1.0 progress
+    const scroll = scrollProgress.current;
+    const exitProgress = Math.min(Math.max((scroll - 0.7) / 0.3, 0), 1);
+    const exitEase = exitProgress * exitProgress; // quadratic ease
+
+    uniforms.uOpacity.value = 1 - exitEase;
+
     if (meshRef.current) {
       meshRef.current.rotation.y = elapsed * 0.15;
       meshRef.current.rotation.x = Math.sin(elapsed * 0.1) * 0.1;
+
+      const baseScale = 0.7 * (1 - exitEase * 0.6);
+      meshRef.current.scale.setScalar(baseScale);
+      meshRef.current.position.y = exitEase * 1.5;
     }
   });
 

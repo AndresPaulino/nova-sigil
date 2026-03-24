@@ -86,7 +86,7 @@ const cardVariants = {
 
 export function Services() {
   return (
-    <section id="services" className="relative overflow-hidden px-8 py-28">
+    <section id="services" className="relative z-20 overflow-hidden bg-background px-8 py-28">
       {/* Background sigil */}
       <img
         src="/sigils/flower-of-life.svg"

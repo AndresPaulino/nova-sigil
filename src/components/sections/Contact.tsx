@@ -1,9 +1,13 @@
 "use client";
 
-import { type FormEvent } from "react";
+import { type FormEvent, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextReveal } from "@/components/ui/TextReveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+
+gsap.registerPlugin(ScrollTrigger);
 
 // ─── Animation ───
 
@@ -24,15 +28,51 @@ const formContainerVariants = {
 // ─── Component ───
 
 export function Contact() {
+  const glowRef = useRef<HTMLDivElement>(null);
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
 
+  useEffect(() => {
+    const glow = glowRef.current;
+    if (!glow) return;
+
+    const st = ScrollTrigger.create({
+      trigger: "#contact",
+      start: "top 80%",
+      end: "top center",
+      scrub: 1,
+      onUpdate: (self) => {
+        const p = self.progress;
+        gsap.set(glow, {
+          scale: p,
+          opacity: 0.6 * p,
+        });
+      },
+    });
+
+    return () => {
+      st.kill();
+    };
+  }, []);
+
   return (
     <section
       id="contact"
-      className="relative overflow-hidden bg-surface-container-lowest px-8 py-28"
+      className="relative z-20 overflow-hidden bg-surface-container-lowest px-8 py-28"
     >
+      {/* Ambient glow */}
+      <div
+        ref={glowRef}
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: "radial-gradient(circle at center, rgba(242,202,80,0.12) 0%, transparent 60%)",
+          transform: "scale(0)",
+          opacity: 0,
+        }}
+      />
+
       {/* Background sigil */}
       <img
         src="/sigils/sri-yantra.svg"

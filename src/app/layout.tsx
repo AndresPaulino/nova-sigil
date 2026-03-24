@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Manrope } from "next/font/google";
 import { SmoothScroll } from "@/lib/SmoothScroll";
+import { BackgroundCanvas } from "@/components/three/BackgroundCanvas";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import "./globals.css";
@@ -40,10 +41,11 @@ export default function RootLayout({
         >
           Skip to content
         </a>
+        <BackgroundCanvas />
         <SmoothScroll>
           <CustomCursor />
           <ScrollProgress />
-          {children}
+          <div className="relative z-10">{children}</div>
         </SmoothScroll>
       </body>
     </html>

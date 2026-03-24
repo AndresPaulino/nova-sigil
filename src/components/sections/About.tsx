@@ -1,7 +1,12 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextReveal } from "@/components/ui/TextReveal";
+
+gsap.registerPlugin(ScrollTrigger);
 
 // ─── Material Symbols (viewBox 0 -960 960 960) ───
 
@@ -33,7 +38,7 @@ function MaterialIcon({
   );
 }
 
-// ─── Inline Nova Sigil Mark (from nova-sigil-mark.svg, restyled with currentColor) ───
+// ─── Inline Nova Sigil Mark ───
 
 function SigilMark({ className }: { className?: string }) {
   return (
@@ -111,16 +116,61 @@ const bulletVariants = {
 // ─── Component ───
 
 export function About() {
+  const leftRef = useRef<HTMLDivElement>(null);
+  const rightRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const left = leftRef.current;
+    const right = rightRef.current;
+    if (!left || !right) return;
+
+    const triggers: ScrollTrigger[] = [];
+
+    // Left column: slide in from left
+    const stLeft = ScrollTrigger.create({
+      trigger: left,
+      start: "top 85%",
+      end: "top 30%",
+      scrub: 1.2,
+      onUpdate: (self) => {
+        const p = self.progress;
+        gsap.set(left, {
+          x: -100 * (1 - p),
+          opacity: p,
+        });
+      },
+    });
+    triggers.push(stLeft);
+
+    // Right column: slide in from right
+    const stRight = ScrollTrigger.create({
+      trigger: right,
+      start: "top 85%",
+      end: "top 30%",
+      scrub: 1.2,
+      onUpdate: (self) => {
+        const p = self.progress;
+        gsap.set(right, {
+          x: 100 * (1 - p),
+          opacity: p,
+        });
+      },
+    });
+    triggers.push(stRight);
+
+    return () => {
+      triggers.forEach((st) => st.kill());
+    };
+  }, []);
+
   return (
-    <section id="about" className="relative overflow-hidden px-8 py-28">
+    <section id="about" className="relative z-20 overflow-hidden bg-background px-8 py-28">
       <div className="mx-auto grid max-w-7xl items-center gap-12 md:grid-cols-2 md:gap-20">
         {/* LEFT — Sigil Visual */}
-        <motion.div
+        <div
+          ref={leftRef}
           className="relative"
-          initial={{ x: -40, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          style={{ opacity: 0, transform: "translateX(-100px)" }}
         >
           <div className="aspect-square overflow-hidden bg-gradient-to-tr from-surface-container-high to-surface-container">
             <SigilMark className="h-full w-full animate-[spin_60s_linear_infinite] text-primary/30 p-12" />
@@ -135,14 +185,12 @@ export function About() {
               Years Experience
             </span>
           </div>
-        </motion.div>
+        </div>
 
         {/* RIGHT — Philosophy Text */}
-        <motion.div
-          initial={{ x: 40, opacity: 0 }}
-          whileInView={{ x: 0, opacity: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+        <div
+          ref={rightRef}
+          style={{ opacity: 0, transform: "translateX(100px)" }}
         >
           <span className="text-sm font-bold uppercase tracking-[0.3em] text-primary">
             The Philosophy
@@ -156,7 +204,7 @@ export function About() {
             same reverence a master smith gives to an heirloom blade.
           </p>
 
-          {/* Feature bullets */}
+          {/* Feature bullets — keep Framer Motion */}
           <motion.div
             className="mt-10 flex flex-col gap-8"
             variants={bulletContainerVariants}
@@ -184,7 +232,7 @@ export function About() {
               </motion.div>
             ))}
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

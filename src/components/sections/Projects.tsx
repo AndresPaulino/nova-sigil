@@ -1,8 +1,13 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextReveal } from "@/components/ui/TextReveal";
+
+gsap.registerPlugin(ScrollTrigger);
 
 // ─── Inline Geometric SVGs ───
 
@@ -125,13 +130,6 @@ const PROJECTS: Project[] = [
 
 // ─── Animation ───
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.15 },
-  },
-};
-
 const cardVariants = {
   hidden: { y: 40, opacity: 0, filter: "blur(4px)" },
   visible: {
@@ -145,10 +143,86 @@ const cardVariants = {
 // ─── Component ───
 
 export function Projects() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const section = sectionRef.current;
+    const track = trackRef.current;
+    if (!section || !track) return;
+
+    // Skip horizontal scroll on mobile
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 769px)", () => {
+      const cards = track.querySelectorAll<HTMLElement>("[data-project-card]");
+      const visuals = track.querySelectorAll<HTMLElement>("[data-project-visual]");
+
+      // Calculate scroll distance
+      const totalTrackWidth = track.scrollWidth;
+      const viewportWidth = window.innerWidth;
+      const scrollDistance = totalTrackWidth - viewportWidth;
+
+      if (scrollDistance <= 0) return;
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: `+=${scrollDistance * 1.5}`,
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      // Translate the track
+      tl.to(track, {
+        x: -scrollDistance,
+        ease: "none",
+      });
+
+      // Parallax on visuals at 0.5x rate
+      visuals.forEach((visual) => {
+        gsap.to(visual, {
+          x: scrollDistance * 0.5,
+          ease: "none",
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: `+=${scrollDistance * 1.5}`,
+            scrub: 1,
+          },
+        });
+      });
+
+      // Stagger card reveals
+      cards.forEach((card, i) => {
+        gsap.from(card, {
+          opacity: 0,
+          y: 40,
+          filter: "blur(4px)",
+          duration: 0.6,
+          scrollTrigger: {
+            trigger: card,
+            containerAnimation: tl,
+            start: "left 80%",
+            toggleActions: "play none none reverse",
+          },
+        });
+      });
+    });
+
+    return () => {
+      mm.revert();
+    };
+  }, []);
+
   return (
     <section
+      ref={sectionRef}
       id="projects"
-      className="relative overflow-hidden bg-surface-container-lowest px-8 py-28"
+      className="relative z-20 overflow-hidden bg-surface-container-lowest px-8 py-28"
     >
       <div className="mx-auto max-w-7xl">
         {/* Header */}
@@ -161,28 +235,33 @@ export function Projects() {
           </h2>
         </div>
 
-        {/* Project Grid */}
-        <motion.div
-          className="grid gap-8 md:grid-cols-3"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+        {/* Project Track */}
+        <div
+          ref={trackRef}
+          className="grid gap-8 md:flex md:gap-8"
+          style={{ willChange: "transform" }}
         >
           {PROJECTS.map((project) => (
             <motion.article
               key={project.title}
+              data-project-card
               variants={cardVariants}
-              className={`group ${project.featured ? "md:translate-y-12" : ""}`}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              className={`group md:w-[80vw] md:shrink-0 ${project.featured ? "md:translate-y-12" : ""}`}
             >
               {/* Image container */}
               <div
-                className={`relative aspect-[4/5] overflow-hidden border border-outline-variant/10 bg-surface-container-low transition-all duration-300 group-hover:-translate-y-1 group-hover:border-primary/30 ${
+                className={`relative aspect-[4/5] md:aspect-[16/10] overflow-hidden border border-outline-variant/10 bg-surface-container-low transition-all duration-300 group-hover:-translate-y-1 group-hover:border-primary/30 ${
                   project.featured ? "sigil-glow" : ""
                 }`}
               >
                 {/* Abstract geometric visual */}
-                <div className="absolute inset-0 flex items-center justify-center p-12">
+                <div
+                  data-project-visual
+                  className="absolute inset-0 flex items-center justify-center p-12"
+                >
                   {project.visual(
                     "h-full w-full text-primary/20 transition-colors duration-500 group-hover:text-primary/40",
                   )}
@@ -219,7 +298,7 @@ export function Projects() {
               </div>
             </motion.article>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
