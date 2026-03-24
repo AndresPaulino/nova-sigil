@@ -1,7 +1,12 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { TextReveal } from "@/components/ui/TextReveal";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SectionNumber } from "@/components/ui/SectionNumber";
+
+gsap.registerPlugin(ScrollTrigger);
 
 // ─── Material Symbols Outlined (viewBox 0 -960 960 960) ───
 
@@ -85,6 +90,39 @@ const cardVariants = {
 // ─── Component ───
 
 export function Services() {
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    const heading = headingRef.current;
+    if (!heading) return;
+
+    const words = heading.querySelectorAll<HTMLSpanElement>("[data-scroll-word]");
+    const triggers: ScrollTrigger[] = [];
+
+    words.forEach((word, i) => {
+      const st = ScrollTrigger.create({
+        trigger: heading,
+        start: "top 80%",
+        end: "top 40%",
+        scrub: 0.5,
+        onUpdate: (self) => {
+          const wordStart = i / words.length;
+          const wordEnd = (i + 1) / words.length;
+          const t = Math.min(1, Math.max(0, (self.progress - wordStart) / (wordEnd - wordStart)));
+          word.style.opacity = String(0.4 + t * 0.6);
+          word.style.color = t > 0.5
+            ? "var(--on-surface)"
+            : "var(--on-surface-variant)";
+        },
+      });
+      triggers.push(st);
+    });
+
+    return () => {
+      triggers.forEach((st) => st.kill());
+    };
+  }, []);
+
   return (
     <section id="services" className="relative z-20 overflow-hidden bg-background px-8 py-28">
       {/* Background sigil */}
@@ -98,9 +136,24 @@ export function Services() {
       <div className="relative mx-auto max-w-7xl">
         {/* Header */}
         <div className="mb-16 flex flex-col justify-between gap-8 md:flex-row md:items-end">
-          <div>
-            <h2 className="font-headline text-4xl font-bold text-on-surface md:text-5xl">
-              <TextReveal>Core Expertise</TextReveal>
+          <div className="relative">
+            <SectionNumber number="01" />
+            <h2
+              ref={headingRef}
+              className="font-headline text-4xl font-bold md:text-5xl"
+            >
+              <span className="sr-only">Core Expertise</span>
+              {["Core", "Expertise"].map((word) => (
+                <span
+                  key={word}
+                  data-scroll-word
+                  aria-hidden="true"
+                  className="mr-[0.3em] inline-block transition-colors duration-200"
+                  style={{ opacity: 0.4, color: "var(--on-surface-variant)" }}
+                >
+                  {word}
+                </span>
+              ))}
             </h2>
             <div className="mt-4 h-1 w-24 bg-primary" />
           </div>
@@ -122,12 +175,25 @@ export function Services() {
             <motion.div
               key={service.title}
               variants={cardVariants}
+              onMouseMove={(e) => {
+                const rect = e.currentTarget.getBoundingClientRect();
+                e.currentTarget.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
+                e.currentTarget.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
+              }}
               className={`group relative flex min-h-[400px] flex-col justify-between overflow-hidden border-t p-10 transition-all duration-300 hover:-translate-y-1 ${
                 service.featured
                   ? "sigil-glow border-t-primary/20 bg-surface-container-high hover:border-t-primary/40 hover:bg-surface-container"
                   : "border-outline-variant/10 bg-surface-container-low hover:border-t-primary/30 hover:bg-surface-container"
               }`}
             >
+              {/* Cursor spotlight glow */}
+              <div
+                className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                style={{
+                  background: "radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(242,202,80,0.04), transparent 70%)",
+                }}
+              />
+
               {/* Featured badge */}
               {service.featured && (
                 <div className="absolute right-6 top-6 rounded-sm bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-primary">

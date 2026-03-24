@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
+import { loadingState } from "@/lib/loadingState";
 
 const BackgroundSigils = dynamic(
   () =>
@@ -21,7 +22,11 @@ export function BackgroundCanvas() {
       .catch(() => setGpuTier(0));
   }, []);
 
-  // Tier 0 or still loading → no background layer
+  // Tier 0 → no 3D scene, signal ready
+  useEffect(() => {
+    if (gpuTier === 0) loadingState.markReady();
+  }, [gpuTier]);
+
   if (gpuTier === null || gpuTier === 0) return null;
 
   return (

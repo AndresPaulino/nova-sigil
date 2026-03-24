@@ -37,7 +37,7 @@ export function Hero() {
         <h1 className="font-headline text-[12vw] font-bold leading-none tracking-[-0.05em] md:text-[10vw]">
           <TextReveal variant="inscribe" className="text-on-surface">Nova</TextReveal>
           {" "}
-          <TextReveal variant="inscribe" delay={0.24} className="text-primary">Sigil</TextReveal>
+          <TextReveal variant="inscribe" delay={0.24} className="gold-gradient-text">Sigil</TextReveal>
         </h1>
 
         {/* Subtitle with gold accent bar */}

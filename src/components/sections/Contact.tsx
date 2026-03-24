@@ -6,6 +6,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextReveal } from "@/components/ui/TextReveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { SectionNumber } from "@/components/ui/SectionNumber";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -84,12 +85,13 @@ export function Contact() {
       <div className="relative mx-auto grid max-w-7xl gap-16 md:grid-cols-5">
         {/* LEFT — Heading + Email */}
         <motion.div
-          className="md:col-span-2"
+          className="relative md:col-span-2"
           initial={{ x: -40, opacity: 0 }}
           whileInView={{ x: 0, opacity: 1 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
+          <SectionNumber number="04" />
           <h2 className="font-headline text-4xl font-bold leading-tight text-on-surface md:text-5xl">
             <TextReveal>Initiate the Transmutation.</TextReveal>
           </h2>

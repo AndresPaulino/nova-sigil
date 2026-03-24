@@ -1,3 +1,11 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 const NAV_LINKS = [
   { label: "Services", href: "#services" },
   { label: "Projects", href: "#projects" },
@@ -11,10 +19,41 @@ const SOCIAL_LINKS = [
 ];
 
 export function Footer() {
+  const sigilRef = useRef<HTMLImageElement>(null);
+
+  useEffect(() => {
+    const sigil = sigilRef.current;
+    if (!sigil) return;
+
+    const st = ScrollTrigger.create({
+      trigger: sigil.closest("footer"),
+      start: "top 90%",
+      end: "top 40%",
+      scrub: 1,
+      onUpdate: (self) => {
+        gsap.set(sigil, { opacity: 0.02 * self.progress });
+      },
+    });
+
+    return () => {
+      st.kill();
+    };
+  }, []);
+
   return (
-    <footer className="bg-surface-container-lowest">
+    <footer className="relative bg-surface-container-lowest overflow-hidden">
+      {/* Full-width sigil background */}
+      <img
+        ref={sigilRef}
+        src="/sigils/flower-of-life.svg"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 m-auto h-full w-full max-w-[1200px] select-none object-contain"
+        style={{ opacity: 0 }}
+      />
+
       {/* Separator */}
-      <div className="mx-auto max-w-lg px-8 py-8">
+      <div className="relative mx-auto max-w-lg px-8 py-8">
         <img
           src="/sigils/separator.svg"
           alt=""
@@ -23,7 +62,7 @@ export function Footer() {
         />
       </div>
 
-      <div className="px-8 py-16">
+      <div className="relative px-8 py-16">
         <div className="mx-auto flex max-w-7xl flex-col items-start gap-12 md:flex-row md:justify-between">
           {/* LEFT — Branding */}
           <div className="max-w-xs">

@@ -8,6 +8,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Exposed scroll state for other components to read
+export const lenisState = { velocity: 0 };
+
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
 
@@ -20,8 +23,11 @@ export function SmoothScroll({ children }: { children: React.ReactNode }) {
 
     lenisRef.current = lenis;
 
-    // Sync Lenis with GSAP ScrollTrigger
-    lenis.on("scroll", ScrollTrigger.update);
+    // Sync Lenis with GSAP ScrollTrigger and expose velocity
+    lenis.on("scroll", (e: { velocity: number }) => {
+      lenisState.velocity = e.velocity;
+      ScrollTrigger.update();
+    });
 
     gsap.ticker.add((time) => {
       lenis.raf(time * 1000);

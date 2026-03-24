@@ -4,6 +4,7 @@ import { SmoothScroll } from "@/lib/SmoothScroll";
 import { BackgroundCanvas } from "@/components/three/BackgroundCanvas";
 import { CustomCursor } from "@/components/ui/CustomCursor";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
+import { PageLoader } from "@/components/ui/PageLoader";
 import "./globals.css";
 
 const headline = Space_Grotesk({
@@ -41,6 +42,7 @@ export default function RootLayout({
         >
           Skip to content
         </a>
+        <PageLoader />
         <BackgroundCanvas />
         <SmoothScroll>
           <CustomCursor />

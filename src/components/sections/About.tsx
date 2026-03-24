@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextReveal } from "@/components/ui/TextReveal";
+import { SectionNumber } from "@/components/ui/SectionNumber";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -190,8 +191,10 @@ export function About() {
         {/* RIGHT — Philosophy Text */}
         <div
           ref={rightRef}
+          className="relative"
           style={{ opacity: 0, transform: "translateX(100px)" }}
         >
+          <SectionNumber number="03" />
           <span className="text-sm font-bold uppercase tracking-[0.3em] text-primary">
             The Philosophy
           </span>

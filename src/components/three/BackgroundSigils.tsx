@@ -9,6 +9,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import * as THREE from "three";
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader.js";
+import { loadingState } from "@/lib/loadingState";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -589,6 +590,7 @@ export function BackgroundSigils() {
       camera={{ position: [0, 0, 5], fov: 50 }}
       gl={{ antialias: false, alpha: true }}
       style={{ position: "absolute", inset: 0 }}
+      onCreated={() => loadingState.markReady()}
     >
       <PerformanceMonitor
         onDecline={() => {

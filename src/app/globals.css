@@ -60,6 +60,21 @@ body::before {
   100% { transform: scale(1.1); }
 }
 
+@keyframes gold-shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* ─── Gold Gradient Text ─── */
+.gold-gradient-text {
+  background: linear-gradient(90deg, #f2ca50, #d4af37, #e9c349, #f2ca50);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gold-shimmer 8s linear infinite;
+}
+
 /* ─── Utilities ─── */
 .sigil-glow {
   box-shadow: 0 0 40px rgba(242, 202, 80, 0.08);

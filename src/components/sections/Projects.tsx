@@ -6,6 +6,8 @@ import type { ReactNode } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextReveal } from "@/components/ui/TextReveal";
+import { SectionNumber } from "@/components/ui/SectionNumber";
+import { lenisState } from "@/lib/SmoothScroll";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -196,6 +198,21 @@ export function Projects() {
         });
       });
 
+      // Velocity-based skew on cards
+      const skewSetters = Array.from(cards).map((card) =>
+        gsap.quickTo(card, "skewX", { duration: 0.4, ease: "power2.out" }),
+      );
+
+      const onTick = () => {
+        const clampedVelocity = Math.max(-3, Math.min(3, lenisState.velocity * 0.3));
+        skewSetters.forEach((setter) => setter(clampedVelocity));
+      };
+
+      gsap.ticker.add(onTick);
+
+      // Store for cleanup
+      const cleanupTicker = () => gsap.ticker.remove(onTick);
+
       // Stagger card reveals
       cards.forEach((card, i) => {
         gsap.from(card, {
@@ -211,6 +228,11 @@ export function Projects() {
           },
         });
       });
+
+      // Return cleanup for matchMedia
+      return () => {
+        cleanupTicker();
+      };
     });
 
     return () => {
@@ -226,7 +248,8 @@ export function Projects() {
     >
       <div className="mx-auto max-w-7xl">
         {/* Header */}
-        <div className="mb-16">
+        <div className="relative mb-16">
+          <SectionNumber number="02" />
           <span className="text-sm font-bold uppercase tracking-[0.3em] text-primary">
             Portfolio
           </span>
