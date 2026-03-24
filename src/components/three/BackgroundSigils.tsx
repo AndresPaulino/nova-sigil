@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect, useMemo } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { PerformanceMonitor } from "@react-three/drei";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { useReducedMotion } from "@/lib/useReducedMotion";
@@ -205,14 +205,311 @@ function ScrollTracker() {
   return null;
 }
 
+// ─── Particle Shaders ───
+
+const particleVertexShader = /* glsl */ `
+attribute vec3 color;
+varying vec3 vColor;
+uniform float uSize;
+
+void main() {
+  vColor = color;
+  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+  gl_PointSize = uSize * (300.0 / -mvPosition.z);
+  gl_Position = projectionMatrix * mvPosition;
+}
+`;
+
+const particleFragmentShader = /* glsl */ `
+varying vec3 vColor;
+
+void main() {
+  vec2 center = gl_PointCoord - 0.5;
+  float dist = length(center);
+
+  if (dist > 0.5) discard;
+
+  float alpha = 1.0 - smoothstep(0.0, 0.5, dist);
+
+  gl_FragColor = vec4(vColor, alpha);
+}
+`;
+
+// ─── Particle Constants ───
+
+const GOLD_COLOR = new THREE.Color("#f2ca50");
+const PARTICLE_Z_MIN = -5;
+const PARTICLE_Z_MAX = -20;
+const PARTICLE_Z_MID = -12;
+const PARTICLE_BOUNDS = 20;
+const REPULSION_RADIUS = 3;
+const REPULSION_STRENGTH = 0.5;
+const REPULSION_DECAY = 0.03;
+
+// Cached vectors to avoid GC pressure in useFrame
+const _mouseWorld = new THREE.Vector3();
+const _dir = new THREE.Vector3();
+
+// ─── Gold Particles ───
+
+function GoldParticles({ count }: { count: number }) {
+  const pointsRef = useRef<THREE.Points>(null);
+  const { camera } = useThree();
+  const reducedMotion = useReducedMotion();
+
+  const { positions, colors, speeds, twinkleFreq, twinklePhase, repulsionX, repulsionY } =
+    useMemo(() => {
+      const pos = new Float32Array(count * 3);
+      const col = new Float32Array(count * 3);
+      const spd = new Float32Array(count);
+      const freq = new Float32Array(count);
+      const phase = new Float32Array(count);
+      const repX = new Float32Array(count);
+      const repY = new Float32Array(count);
+
+      for (let i = 0; i < count; i++) {
+        const i3 = i * 3;
+        pos[i3] = (Math.random() - 0.5) * PARTICLE_BOUNDS * 2;
+        pos[i3 + 1] = (Math.random() - 0.5) * PARTICLE_BOUNDS * 2;
+        pos[i3 + 2] = PARTICLE_Z_MIN + Math.random() * (PARTICLE_Z_MAX - PARTICLE_Z_MIN);
+
+        col[i3] = GOLD_COLOR.r * 0.05;
+        col[i3 + 1] = GOLD_COLOR.g * 0.05;
+        col[i3 + 2] = GOLD_COLOR.b * 0.05;
+
+        spd[i] = 0.001 + Math.random() * 0.004;
+        freq[i] = 0.5 + Math.random() * 1.5;
+        phase[i] = Math.random() * Math.PI * 2;
+        repX[i] = 0;
+        repY[i] = 0;
+      }
+
+      return {
+        positions: pos,
+        colors: col,
+        speeds: spd,
+        twinkleFreq: freq,
+        twinklePhase: phase,
+        repulsionX: repX,
+        repulsionY: repY,
+      };
+    }, [count]);
+
+  const parallaxSpeed = THREE.MathUtils.mapLinear(
+    PARTICLE_Z_MID, -6, -15, -2, -0.5,
+  );
+
+  useFrame(({ clock }) => {
+    if (!pointsRef.current || reducedMotion) return;
+
+    const geo = pointsRef.current.geometry;
+    const posAttr = geo.getAttribute("position") as THREE.BufferAttribute;
+    const colAttr = geo.getAttribute("color") as THREE.BufferAttribute;
+    const posArr = posAttr.array as Float32Array;
+    const colArr = colAttr.array as Float32Array;
+    const time = clock.getElapsedTime();
+
+    // Project mouse to world at z = PARTICLE_Z_MID
+    const ndcX = mousePos.x * 2 - 1;
+    const ndcY = -(mousePos.y * 2 - 1);
+    _mouseWorld.set(ndcX, ndcY, 0.5).unproject(camera);
+    _dir.copy(_mouseWorld).sub(camera.position).normalize();
+    const t = (PARTICLE_Z_MID - camera.position.z) / _dir.z;
+    const worldMX = camera.position.x + _dir.x * t;
+    const worldMY = camera.position.y + _dir.y * t;
+
+    // Scroll parallax offset for entire group
+    const scrollOffsetY = scrollState.progress * parallaxSpeed;
+
+    for (let i = 0; i < count; i++) {
+      const i3 = i * 3;
+
+      // Drift upward
+      posArr[i3 + 1] += speeds[i];
+
+      // Recycle at top boundary
+      if (posArr[i3 + 1] > PARTICLE_BOUNDS) {
+        posArr[i3 + 1] = -PARTICLE_BOUNDS;
+        posArr[i3] = (Math.random() - 0.5) * PARTICLE_BOUNDS * 2;
+        posArr[i3 + 2] = PARTICLE_Z_MIN + Math.random() * (PARTICLE_Z_MAX - PARTICLE_Z_MIN);
+        repulsionX[i] = 0;
+        repulsionY[i] = 0;
+      }
+
+      // Mouse repulsion
+      const dx = posArr[i3] - worldMX;
+      const dy = (posArr[i3 + 1] + scrollOffsetY) - worldMY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < REPULSION_RADIUS && dist > 0.001) {
+        const force = REPULSION_STRENGTH * (1 - dist / REPULSION_RADIUS);
+        repulsionX[i] += (dx / dist) * force;
+        repulsionY[i] += (dy / dist) * force;
+      }
+
+      // Decay repulsion
+      repulsionX[i] *= (1 - REPULSION_DECAY);
+      repulsionY[i] *= (1 - REPULSION_DECAY);
+
+      // Apply repulsion offset to position
+      posArr[i3] += repulsionX[i] * 0.1;
+      posArr[i3 + 1] += repulsionY[i] * 0.1;
+
+      // Twinkle — modulate RGB brightness to simulate alpha with additive blending
+      const twinkle = Math.sin(time * twinkleFreq[i] + twinklePhase[i]);
+      const brightness = 0.02 + (twinkle * 0.5 + 0.5) * 0.06; // range [0.02, 0.08]
+      colArr[i3] = GOLD_COLOR.r * brightness;
+      colArr[i3 + 1] = GOLD_COLOR.g * brightness;
+      colArr[i3 + 2] = GOLD_COLOR.b * brightness;
+    }
+
+    // Apply scroll parallax to group position
+    pointsRef.current.position.y = scrollOffsetY;
+
+    posAttr.needsUpdate = true;
+    colAttr.needsUpdate = true;
+  });
+
+  return (
+    <points ref={pointsRef}>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          args={[positions, 3]}
+          count={count}
+        />
+        <bufferAttribute
+          attach="attributes-color"
+          args={[colors, 3]}
+          count={count}
+        />
+      </bufferGeometry>
+      <shaderMaterial
+        vertexShader={particleVertexShader}
+        fragmentShader={particleFragmentShader}
+        uniforms={{ uSize: { value: 0.8 } }}
+        transparent
+        blending={THREE.AdditiveBlending}
+        depthWrite={false}
+        toneMapped={false}
+      />
+    </points>
+  );
+}
+
+// ─── Starscape ───
+
+const STAR_COUNT = 150;
+const STAR_Z_MIN = -25;
+const STAR_Z_MAX = -40;
+const STAR_Z_MID = -32;
+
+function Starscape() {
+  const pointsRef = useRef<THREE.Points>(null);
+  const reducedMotion = useReducedMotion();
+
+  const { positions, colors, speeds, twinkleFreq, twinklePhase } = useMemo(() => {
+    const pos = new Float32Array(STAR_COUNT * 3);
+    const col = new Float32Array(STAR_COUNT * 3);
+    const spd = new Float32Array(STAR_COUNT);
+    const freq = new Float32Array(STAR_COUNT);
+    const phase = new Float32Array(STAR_COUNT);
+
+    for (let i = 0; i < STAR_COUNT; i++) {
+      const i3 = i * 3;
+      pos[i3] = (Math.random() - 0.5) * PARTICLE_BOUNDS * 2;
+      pos[i3 + 1] = (Math.random() - 0.5) * PARTICLE_BOUNDS * 2;
+      pos[i3 + 2] = STAR_Z_MIN + Math.random() * (STAR_Z_MAX - STAR_Z_MIN);
+
+      col[i3] = 0.04;
+      col[i3 + 1] = 0.04;
+      col[i3 + 2] = 0.04;
+
+      spd[i] = 0.0005 + Math.random() * 0.0015;
+      freq[i] = 0.5 + Math.random() * 1.5;
+      phase[i] = Math.random() * Math.PI * 2;
+    }
+
+    return { positions: pos, colors: col, speeds: spd, twinkleFreq: freq, twinklePhase: phase };
+  }, []);
+
+  const parallaxSpeed = THREE.MathUtils.mapLinear(
+    STAR_Z_MID, -6, -15, -2, -0.5,
+  );
+
+  useFrame(({ clock }) => {
+    if (!pointsRef.current || reducedMotion) return;
+
+    const geo = pointsRef.current.geometry;
+    const posAttr = geo.getAttribute("position") as THREE.BufferAttribute;
+    const colAttr = geo.getAttribute("color") as THREE.BufferAttribute;
+    const posArr = posAttr.array as Float32Array;
+    const colArr = colAttr.array as Float32Array;
+    const time = clock.getElapsedTime();
+
+    for (let i = 0; i < STAR_COUNT; i++) {
+      const i3 = i * 3;
+
+      // Slow drift upward
+      posArr[i3 + 1] += speeds[i];
+
+      // Recycle
+      if (posArr[i3 + 1] > PARTICLE_BOUNDS) {
+        posArr[i3 + 1] = -PARTICLE_BOUNDS;
+        posArr[i3] = (Math.random() - 0.5) * PARTICLE_BOUNDS * 2;
+      }
+
+      // Twinkle — dim white, range [0.03, 0.06]
+      const twinkle = Math.sin(time * twinkleFreq[i] + twinklePhase[i]);
+      const brightness = 0.03 + (twinkle * 0.5 + 0.5) * 0.03;
+      colArr[i3] = brightness;
+      colArr[i3 + 1] = brightness;
+      colArr[i3 + 2] = brightness;
+    }
+
+    // Scroll parallax (slower — deeper z)
+    pointsRef.current.position.y = scrollState.progress * parallaxSpeed;
+
+    posAttr.needsUpdate = true;
+    colAttr.needsUpdate = true;
+  });
+
+  return (
+    <points ref={pointsRef}>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          args={[positions, 3]}
+          count={STAR_COUNT}
+        />
+        <bufferAttribute
+          attach="attributes-color"
+          args={[colors, 3]}
+          count={STAR_COUNT}
+        />
+      </bufferGeometry>
+      <shaderMaterial
+        vertexShader={particleVertexShader}
+        fragmentShader={particleFragmentShader}
+        uniforms={{ uSize: { value: 0.5 } }}
+        transparent
+        blending={THREE.AdditiveBlending}
+        depthWrite={false}
+        toneMapped={false}
+      />
+    </points>
+  );
+}
+
 // ─── Scene ───
 
 function Scene({
   maxSigils,
   bloomEnabled,
+  particleCount,
 }: {
   maxSigils: number;
   bloomEnabled: boolean;
+  particleCount: number;
 }) {
   const [geometries, setGeometries] = useState<Map<string, THREE.BufferGeometry>>(
     new Map(),
@@ -254,6 +551,8 @@ function Scene({
     <>
       <MouseTracker />
       <ScrollTracker />
+      <Starscape />
+      <GoldParticles count={particleCount} />
       {configs.map((config) => {
         const geometry = geometries.get(config.url);
         if (!geometry) return null;
@@ -280,6 +579,7 @@ function Scene({
 export function BackgroundSigils() {
   const [maxSigils, setMaxSigils] = useState(5);
   const [bloomEnabled, setBloomEnabled] = useState(true);
+  const [particleCount, setParticleCount] = useState(3000);
   const reducedMotion = useReducedMotion();
 
   return (
@@ -294,13 +594,15 @@ export function BackgroundSigils() {
         onDecline={() => {
           setMaxSigils(3);
           setBloomEnabled(false);
+          setParticleCount(1000);
         }}
         onIncline={() => {
           setMaxSigils(5);
           setBloomEnabled(true);
+          setParticleCount(3000);
         }}
       >
-        <Scene maxSigils={maxSigils} bloomEnabled={bloomEnabled} />
+        <Scene maxSigils={maxSigils} bloomEnabled={bloomEnabled} particleCount={particleCount} />
       </PerformanceMonitor>
     </Canvas>
   );
