@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Manrope } from "next/font/google";
+import { Space_Grotesk, Outfit, JetBrains_Mono } from "next/font/google";
 import { SmoothScroll } from "@/lib/SmoothScroll";
 import { BackgroundCanvas } from "@/components/three/BackgroundCanvas";
 import { CustomCursor } from "@/components/ui/CustomCursor";
@@ -13,10 +13,16 @@ const headline = Space_Grotesk({
   weight: ["300", "400", "500", "600", "700"],
 });
 
-const body = Manrope({
+const body = Outfit({
   subsets: ["latin"],
   variable: "--font-body",
   weight: ["200", "300", "400", "500", "600", "700"],
+});
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  weight: ["200", "300"],
 });
 
 export const metadata: Metadata = {
@@ -33,12 +39,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark ${headline.variable} ${body.variable} h-full antialiased`}
+      className={`dark ${headline.variable} ${body.variable} ${mono.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-background text-on-surface font-body">
+      <body className="min-h-full bg-surface text-body font-body">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[99999] focus:rounded-md focus:bg-primary-container focus:px-4 focus:py-2 focus:text-on-primary focus:font-bold focus:outline-none"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[99999] focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:text-black focus:font-bold focus:outline-none"
         >
           Skip to content
         </a>

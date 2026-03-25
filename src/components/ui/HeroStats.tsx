@@ -31,7 +31,7 @@ const itemVariants = {
 export function HeroStats({ delay = 0 }: HeroStatsProps) {
   return (
     <motion.div
-      className="absolute bottom-12 right-8 z-10 hidden gap-10 md:flex md:right-16 lg:right-24"
+      className="absolute bottom-24 right-8 z-10 hidden gap-12 md:flex md:right-16 lg:right-24"
       variants={containerVariants}
       custom={delay}
       initial="hidden"
@@ -40,8 +40,8 @@ export function HeroStats({ delay = 0 }: HeroStatsProps) {
     >
       {stats.map((stat) => (
         <motion.div key={stat.label} variants={itemVariants} className="flex flex-col">
-          <span className="font-headline text-2xl text-primary">{stat.value}</span>
-          <span className="text-xs uppercase tracking-widest text-on-surface-variant/60">
+          <span className="font-headline text-2xl text-heading">{stat.value}</span>
+          <span className="text-xs font-mono uppercase tracking-widest text-label">
             {stat.label}
           </span>
         </motion.div>

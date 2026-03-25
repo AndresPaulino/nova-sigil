@@ -73,14 +73,14 @@ function SigilMesh() {
       meshRef.current.rotation.y = elapsed * 0.15;
       meshRef.current.rotation.x = Math.sin(elapsed * 0.1) * 0.1;
 
-      const baseScale = 0.7 * (1 - exitEase * 0.6);
+      const baseScale = 0.6 * (1 - exitEase * 0.4);
       meshRef.current.scale.setScalar(baseScale);
       meshRef.current.position.y = exitEase * 1.5;
     }
   });
 
   return (
-    <mesh ref={meshRef} scale={[0.7, 0.7, 0.7]}>
+    <mesh ref={meshRef} scale={[0.6, 0.6, 0.6]}>
       <icosahedronGeometry args={[1, 64]} />
       <shaderMaterial
         ref={materialRef}
@@ -152,8 +152,8 @@ export function HeroScene() {
           <EffectComposer>
             <Bloom
               mipmapBlur
-              luminanceThreshold={1.5}
-              intensity={0.8}
+              luminanceThreshold={1.8}
+              intensity={0.6}
               radius={0.3}
             />
           </EffectComposer>

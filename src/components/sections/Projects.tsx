@@ -7,6 +7,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextReveal } from "@/components/ui/TextReveal";
 import { SectionNumber } from "@/components/ui/SectionNumber";
+import { CrosshairMarker } from "@/components/ui/CrosshairMarker";
 import { lenisState } from "@/lib/SmoothScroll";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -244,18 +245,25 @@ export function Projects() {
     <section
       ref={sectionRef}
       id="projects"
-      className="relative z-20 overflow-hidden bg-surface-container-lowest px-8 py-28"
+      className="relative z-20 overflow-hidden bg-surface px-8 py-28"
     >
-      <div className="mx-auto max-w-7xl">
+      <div className="relative mx-auto max-w-7xl">
+        {/* Corner crosshairs */}
+        <CrosshairMarker className="absolute -top-8 left-0 text-label" />
+        <CrosshairMarker className="absolute -top-8 right-0 text-label" />
+
         {/* Header */}
         <div className="relative mb-16">
           <SectionNumber number="02" />
-          <span className="text-sm font-bold uppercase tracking-[0.3em] text-primary">
+          {/* Heading crosshairs */}
+          <CrosshairMarker className="absolute -left-8 top-8 text-label" />
+          <span className="text-sm font-bold uppercase tracking-[0.3em] text-label">
             Portfolio
           </span>
-          <h2 className="mt-4 font-headline text-5xl font-bold text-on-surface md:text-6xl">
+          <h2 className="mt-4 font-headline text-5xl font-bold text-heading md:text-6xl">
             <TextReveal>Selected Case Studies</TextReveal>
           </h2>
+          <CrosshairMarker className="absolute -right-8 top-8 text-label" />
         </div>
 
         {/* Project Track */}
@@ -276,8 +284,8 @@ export function Projects() {
             >
               {/* Image container */}
               <div
-                className={`relative aspect-[4/5] md:aspect-[16/10] overflow-hidden border border-outline-variant/10 bg-surface-container-low transition-all duration-300 group-hover:-translate-y-1 group-hover:border-primary/30 ${
-                  project.featured ? "sigil-glow" : ""
+                className={`relative aspect-[4/5] md:aspect-[16/10] overflow-hidden border border-divider bg-surface-alt transition-all duration-300 group-hover:-translate-y-1 group-hover:border-divider-hover ${
+                  project.featured ? "glow-white" : ""
                 }`}
               >
                 {/* Abstract geometric visual */}
@@ -286,19 +294,19 @@ export function Projects() {
                   className="absolute inset-0 flex items-center justify-center p-12"
                 >
                   {project.visual(
-                    "h-full w-full text-primary/20 transition-colors duration-500 group-hover:text-primary/40",
+                    "h-full w-full text-label/20 transition-colors duration-500 group-hover:text-label/40",
                   )}
                 </div>
 
                 {/* Bottom gradient overlay */}
-                <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-surface-container-lowest/90 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-surface/90 to-transparent" />
 
                 {/* Category + title over image */}
                 <div className="absolute bottom-0 left-0 p-6">
-                  <span className="text-xs font-semibold uppercase tracking-widest text-primary/70">
+                  <span className="text-xs font-semibold uppercase tracking-widest text-label">
                     {project.category}
                   </span>
-                  <h3 className="mt-1 font-headline text-2xl font-bold text-on-surface">
+                  <h3 className="mt-1 font-headline text-2xl font-bold text-heading">
                     {project.title}
                   </h3>
                 </div>
@@ -306,12 +314,12 @@ export function Projects() {
 
               {/* Description */}
               <div className="mt-6">
-                <p className="leading-relaxed text-on-surface-variant">
+                <p className="leading-relaxed text-body">
                   {project.description}
                 </p>
                 <a
                   href="#contact"
-                  className="mt-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-primary transition-opacity duration-300 hover:opacity-80"
+                  className="mt-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-body transition-colors duration-300 hover:text-heading"
                 >
                   View Case Study
                   <span className="transition-transform duration-300 group-hover:translate-x-1">

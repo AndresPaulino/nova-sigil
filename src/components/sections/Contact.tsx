@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextReveal } from "@/components/ui/TextReveal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { SectionNumber } from "@/components/ui/SectionNumber";
+import { CrosshairMarker } from "@/components/ui/CrosshairMarker";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -61,14 +62,14 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative z-20 overflow-hidden bg-surface-container-lowest px-8 py-28"
+      className="relative z-20 overflow-hidden bg-surface px-8 py-28"
     >
       {/* Ambient glow */}
       <div
         ref={glowRef}
         className="pointer-events-none absolute inset-0"
         style={{
-          background: "radial-gradient(circle at center, rgba(242,202,80,0.12) 0%, transparent 60%)",
+          background: "radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 60%)",
           transform: "scale(0)",
           opacity: 0,
         }}
@@ -83,6 +84,10 @@ export function Contact() {
       />
 
       <div className="relative mx-auto grid max-w-7xl gap-16 md:grid-cols-5">
+        {/* Corner crosshairs */}
+        <CrosshairMarker className="absolute -top-8 left-0 text-label" />
+        <CrosshairMarker className="absolute -top-8 right-0 text-label" />
+
         {/* LEFT — Heading + Email */}
         <motion.div
           className="relative md:col-span-2"
@@ -92,21 +97,24 @@ export function Contact() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
           <SectionNumber number="04" />
-          <h2 className="font-headline text-4xl font-bold leading-tight text-on-surface md:text-5xl">
+          {/* Heading crosshairs */}
+          <CrosshairMarker className="absolute -left-8 top-3 text-label" />
+          <h2 className="font-headline text-4xl font-bold leading-tight text-heading md:text-5xl">
             <TextReveal>Initiate the Transmutation.</TextReveal>
           </h2>
-          <p className="mt-6 text-lg leading-relaxed text-on-surface-variant">
+          <CrosshairMarker className="absolute -right-8 top-3 text-label" />
+          <p className="mt-6 text-lg leading-relaxed text-body">
             Ready to bring your vision into the physical realm? Reach out to our
             leads.
           </p>
 
           <div className="mt-12">
-            <span className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+            <span className="text-xs font-bold uppercase tracking-widest text-label">
               Direct Channel
             </span>
             <a
               href="mailto:hello@novasigil.com"
-              className="mt-2 block font-headline text-2xl text-primary transition-colors duration-300 hover:text-on-surface md:text-3xl"
+              className="mt-2 block font-headline text-2xl text-body transition-colors duration-300 hover:text-heading md:text-3xl"
             >
               hello@novasigil.com
             </a>
@@ -123,7 +131,7 @@ export function Contact() {
         >
           <form
             onSubmit={handleSubmit}
-            className="rounded-md border border-outline-variant/10 bg-surface-container-low p-8 md:p-12"
+            className="rounded-md border border-divider bg-surface-alt p-8 md:p-12"
           >
             <motion.div
               className="flex flex-col gap-8"
@@ -135,7 +143,7 @@ export function Contact() {
               {/* Name + Email row */}
               <div className="grid gap-8 md:grid-cols-2">
                 <motion.div variants={fieldVariants}>
-                  <label htmlFor="contact-name" className="mb-2 block text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+                  <label htmlFor="contact-name" className="mb-2 block text-xs font-bold uppercase tracking-widest text-label">
                     Full Name
                   </label>
                   <input
@@ -144,11 +152,11 @@ export function Contact() {
                     type="text"
                     placeholder="John Doe"
                     required
-                    className="w-full border-b border-outline-variant/40 bg-transparent py-3 text-on-surface placeholder:text-on-surface/20 focus:border-primary focus:outline-none focus:ring-0"
+                    className="w-full border-b border-divider-hover bg-transparent py-3 text-heading placeholder:text-muted focus:border-accent focus:outline-none focus:ring-0"
                   />
                 </motion.div>
                 <motion.div variants={fieldVariants}>
-                  <label htmlFor="contact-email" className="mb-2 block text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+                  <label htmlFor="contact-email" className="mb-2 block text-xs font-bold uppercase tracking-widest text-label">
                     Email Address
                   </label>
                   <input
@@ -157,14 +165,14 @@ export function Contact() {
                     type="email"
                     placeholder="john@company.com"
                     required
-                    className="w-full border-b border-outline-variant/40 bg-transparent py-3 text-on-surface placeholder:text-on-surface/20 focus:border-primary focus:outline-none focus:ring-0"
+                    className="w-full border-b border-divider-hover bg-transparent py-3 text-heading placeholder:text-muted focus:border-accent focus:outline-none focus:ring-0"
                   />
                 </motion.div>
               </div>
 
               {/* Textarea */}
               <motion.div variants={fieldVariants}>
-                <label htmlFor="contact-message" className="mb-2 block text-xs font-bold uppercase tracking-widest text-on-surface-variant">
+                <label htmlFor="contact-message" className="mb-2 block text-xs font-bold uppercase tracking-widest text-label">
                   Your Vision
                 </label>
                 <textarea
@@ -173,7 +181,7 @@ export function Contact() {
                   rows={4}
                   placeholder="Tell us about your project..."
                   required
-                  className="w-full resize-none border-b border-outline-variant/40 bg-transparent py-3 text-on-surface placeholder:text-on-surface/20 focus:border-primary focus:outline-none focus:ring-0"
+                  className="w-full resize-none border-b border-divider-hover bg-transparent py-3 text-heading placeholder:text-muted focus:border-accent focus:outline-none focus:ring-0"
                 />
               </motion.div>
 
@@ -182,7 +190,7 @@ export function Contact() {
                 <MagneticButton className="w-full" strength={0.15} radius={200}>
                   <button
                     type="submit"
-                    className="w-full rounded-md bg-primary-container py-5 text-lg font-bold text-on-primary transition-all duration-300 hover:shadow-[0_0_25px_rgba(212,175,55,0.3)]"
+                    className="w-full rounded-md bg-accent py-5 text-lg font-bold text-black transition-all duration-300 hover:bg-accent-hover hover:shadow-[0_0_25px_rgba(200,168,78,0.3)]"
                   >
                     Send Message
                   </button>

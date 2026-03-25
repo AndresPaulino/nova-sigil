@@ -59,7 +59,7 @@ export function Navbar() {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
-          className="text-2xl font-headline font-bold text-primary"
+          className="text-2xl font-headline font-bold text-heading"
         >
           Nova Sigil
         </a>
@@ -71,7 +71,7 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               onClick={(e) => handleClick(e, link.href)}
-              className="text-sm font-body font-medium text-on-surface-variant hover:text-on-surface transition-colors duration-300"
+              className="text-sm font-body font-medium text-body hover:text-heading transition-colors duration-300"
             >
               {link.label}
             </a>
@@ -80,7 +80,7 @@ export function Navbar() {
             <a
               href="#contact"
               onClick={(e) => handleClick(e, "#contact")}
-              className="rounded-md bg-primary-container px-5 py-2 text-sm font-body font-semibold text-on-primary hover:bg-primary transition-colors duration-300"
+              className="rounded-md bg-accent px-5 py-2 text-sm font-body font-semibold text-black hover:bg-accent-hover transition-colors duration-300"
             >
               Contact
             </a>
@@ -90,7 +90,7 @@ export function Navbar() {
         {/* Mobile hamburger */}
         <button
           type="button"
-          className="flex md:hidden items-center justify-center w-10 h-10 text-on-surface-variant hover:text-on-surface transition-colors duration-300"
+          className="flex md:hidden items-center justify-center w-10 h-10 text-body hover:text-heading transition-colors duration-300"
           aria-label="Open menu"
         >
           <svg

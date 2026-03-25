@@ -6,6 +6,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextReveal } from "@/components/ui/TextReveal";
 import { SectionNumber } from "@/components/ui/SectionNumber";
+import { CrosshairMarker } from "@/components/ui/CrosshairMarker";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -165,24 +166,27 @@ export function About() {
   }, []);
 
   return (
-    <section id="about" className="relative z-20 overflow-hidden bg-background px-8 py-28">
-      <div className="mx-auto grid max-w-7xl items-center gap-12 md:grid-cols-2 md:gap-20">
+    <section id="about" className="relative z-20 overflow-hidden bg-surface-alt px-8 py-28">
+      <div className="relative mx-auto grid max-w-7xl items-center gap-12 md:grid-cols-2 md:gap-20">
+        {/* Corner crosshairs */}
+        <CrosshairMarker className="absolute -top-8 left-0 text-label" />
+        <CrosshairMarker className="absolute -top-8 right-0 text-label" />
         {/* LEFT — Sigil Visual */}
         <div
           ref={leftRef}
           className="relative"
           style={{ opacity: 0, transform: "translateX(-100px)" }}
         >
-          <div className="aspect-square overflow-hidden bg-gradient-to-tr from-surface-container-high to-surface-container">
-            <SigilMark className="h-full w-full animate-[spin_60s_linear_infinite] text-primary/30 p-12" />
+          <div className="aspect-square overflow-hidden bg-gradient-to-tr from-surface-card to-surface-alt">
+            <SigilMark className="h-full w-full animate-[spin_60s_linear_infinite] text-muted p-12" />
           </div>
 
           {/* Experience badge */}
-          <div className="absolute -bottom-6 -right-6 hidden rounded-md bg-primary-container p-8 md:block">
-            <span className="block font-headline text-4xl font-bold text-on-primary">
+          <div className="absolute -bottom-6 -right-6 hidden rounded-md bg-surface-elevated p-8 md:block">
+            <span className="block font-headline text-4xl font-bold text-heading">
               12+
             </span>
-            <span className="text-xs font-semibold uppercase tracking-widest text-on-primary/80">
+            <span className="text-xs font-semibold uppercase tracking-widest text-label">
               Years Experience
             </span>
           </div>
@@ -195,13 +199,16 @@ export function About() {
           style={{ opacity: 0, transform: "translateX(100px)" }}
         >
           <SectionNumber number="03" />
-          <span className="text-sm font-bold uppercase tracking-[0.3em] text-primary">
+          {/* Heading crosshairs */}
+          <CrosshairMarker className="absolute -left-8 top-8 text-label" />
+          <span className="text-sm font-bold uppercase tracking-[0.3em] text-label">
             The Philosophy
           </span>
-          <h2 className="mt-4 font-headline text-4xl font-bold leading-tight text-on-surface md:text-5xl">
+          <h2 className="mt-4 font-headline text-4xl font-bold leading-tight text-heading md:text-5xl">
             <TextReveal>Craftsmanship and Precision.</TextReveal>
           </h2>
-          <p className="mt-6 text-lg leading-relaxed text-on-surface-variant">
+          <CrosshairMarker className="absolute -right-8 top-8 text-label" />
+          <p className="mt-6 text-lg leading-relaxed text-body">
             At Nova Sigil, we believe software is not just a tool, but an
             expression of logic and intent. We approach every codebase with the
             same reverence a master smith gives to an heirloom blade.
@@ -221,14 +228,14 @@ export function About() {
                 variants={bulletVariants}
                 className="flex gap-5"
               >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-primary/30">
-                  <MaterialIcon name={feat.icon} className="text-primary" />
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-divider-hover">
+                  <MaterialIcon name={feat.icon} className="text-body" />
                 </div>
                 <div>
-                  <h4 className="text-lg font-bold text-on-surface">
+                  <h4 className="text-lg font-bold text-heading">
                     {feat.title}
                   </h4>
-                  <p className="mt-1 text-sm leading-relaxed text-on-surface-variant">
+                  <p className="mt-1 text-sm leading-relaxed text-body">
                     {feat.description}
                   </p>
                 </div>

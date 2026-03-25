@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SectionNumber } from "@/components/ui/SectionNumber";
+import { CrosshairMarker } from "@/components/ui/CrosshairMarker";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -111,8 +112,8 @@ export function Services() {
           const t = Math.min(1, Math.max(0, (self.progress - wordStart) / (wordEnd - wordStart)));
           word.style.opacity = String(0.4 + t * 0.6);
           word.style.color = t > 0.5
-            ? "var(--on-surface)"
-            : "var(--on-surface-variant)";
+            ? "var(--text-primary)"
+            : "var(--text-secondary)";
         },
       });
       triggers.push(st);
@@ -124,7 +125,7 @@ export function Services() {
   }, []);
 
   return (
-    <section id="services" className="relative z-20 overflow-hidden bg-background px-8 py-28">
+    <section id="services" className="relative z-20 overflow-hidden bg-surface-alt px-8 py-28">
       {/* Background sigil */}
       <img
         src="/sigils/flower-of-life.svg"
@@ -134,10 +135,16 @@ export function Services() {
       />
 
       <div className="relative mx-auto max-w-7xl">
+        {/* Corner crosshairs */}
+        <CrosshairMarker className="absolute -top-8 left-0 text-label" />
+        <CrosshairMarker className="absolute -top-8 right-0 text-label" />
+
         {/* Header */}
         <div className="mb-16 flex flex-col justify-between gap-8 md:flex-row md:items-end">
           <div className="relative">
             <SectionNumber number="01" />
+            {/* Heading crosshairs */}
+            <CrosshairMarker className="absolute -left-8 top-3 text-label" />
             <h2
               ref={headingRef}
               className="font-headline text-4xl font-bold md:text-5xl"
@@ -149,15 +156,16 @@ export function Services() {
                   data-scroll-word
                   aria-hidden="true"
                   className="mr-[0.3em] inline-block transition-colors duration-200"
-                  style={{ opacity: 0.4, color: "var(--on-surface-variant)" }}
+                  style={{ opacity: 0.4, color: "var(--text-secondary)" }}
                 >
                   {word}
                 </span>
               ))}
             </h2>
-            <div className="mt-4 h-1 w-24 bg-primary" />
+            <div className="mt-4 h-1 w-24 bg-heading" />
+            <CrosshairMarker className="absolute -right-8 top-3 text-label" />
           </div>
-          <p className="max-w-md text-lg italic text-on-surface-variant">
+          <p className="max-w-md text-lg italic text-body">
             Our services are forged at the intersection of technical mastery and
             artistic vision.
           </p>
@@ -182,21 +190,21 @@ export function Services() {
               }}
               className={`group relative flex min-h-[400px] flex-col justify-between overflow-hidden border-t p-10 transition-all duration-300 hover:-translate-y-1 ${
                 service.featured
-                  ? "sigil-glow border-t-primary/20 bg-surface-container-high hover:border-t-primary/40 hover:bg-surface-container"
-                  : "border-outline-variant/10 bg-surface-container-low hover:border-t-primary/30 hover:bg-surface-container"
+                  ? "glow-white border-t-divider-hover bg-surface-card hover:border-t-label hover:bg-surface-elevated"
+                  : "border-divider bg-surface-alt hover:border-t-divider-hover hover:bg-surface-card"
               }`}
             >
               {/* Cursor spotlight glow */}
               <div
                 className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                 style={{
-                  background: "radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(242,202,80,0.04), transparent 70%)",
+                  background: "radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.03), transparent 70%)",
                 }}
               />
 
               {/* Featured badge */}
               {service.featured && (
-                <div className="absolute right-6 top-6 rounded-sm bg-primary/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-primary">
+                <div className="absolute right-6 top-6 rounded-sm bg-surface-elevated px-3 py-1 text-xs font-semibold uppercase tracking-widest text-label">
                   Featured
                 </div>
               )}
@@ -206,12 +214,12 @@ export function Services() {
                 <MaterialIcon
                   name={service.icon}
                   size={48}
-                  className="text-primary opacity-40 transition-opacity duration-300 group-hover:opacity-100"
+                  className="text-body opacity-40 transition-opacity duration-300 group-hover:opacity-100"
                 />
-                <h3 className="mt-6 font-headline text-2xl font-bold text-on-surface">
+                <h3 className="mt-6 font-headline text-2xl font-bold text-heading">
                   {service.title}
                 </h3>
-                <p className="mt-4 leading-relaxed text-on-surface-variant">
+                <p className="mt-4 leading-relaxed text-body">
                   {service.description}
                 </p>
               </div>
@@ -219,7 +227,7 @@ export function Services() {
               {/* Bottom link */}
               <a
                 href="#contact"
-                className="mt-8 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-primary transition-opacity duration-300 hover:opacity-80"
+                className="mt-8 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-body transition-colors duration-300 hover:text-heading"
               >
                 Explore Service
                 <span className="transition-transform duration-300 group-hover:translate-x-1">
@@ -231,7 +239,7 @@ export function Services() {
               <MaterialIcon
                 name={service.icon}
                 size={200}
-                className="pointer-events-none absolute -bottom-6 -right-6 text-on-surface opacity-[0.03] transition-opacity duration-500 group-hover:opacity-[0.08]"
+                className="pointer-events-none absolute -bottom-6 -right-6 text-muted opacity-[0.15] transition-opacity duration-500 group-hover:opacity-[0.25]"
               />
             </motion.div>
           ))}

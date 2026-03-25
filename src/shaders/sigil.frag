@@ -10,18 +10,18 @@ vec3 cosPalette(float t, vec3 a, vec3 b, vec3 c, vec3 d) {
 }
 
 void main() {
-  // Palette: gold highlights → navy shadows
-  vec3 a = vec3(0.85, 0.72, 0.25);
+  // Palette: pure white/silver
+  vec3 a = vec3(1.0, 1.0, 1.0);
   vec3 b = vec3(0.3);
-  vec3 c = vec3(0.5, 0.5, 0.9);
-  vec3 d = vec3(0.05, 0.08, 0.13);
+  vec3 c = vec3(0.3, 0.3, 0.3);
+  vec3 d = vec3(0.0);
 
   float t = vDistortion * 2.0 + 0.5;
   vec3 color = cosPalette(t, a, b, c, d);
 
   // Fresnel rim to accentuate edges
   float fresnel = pow(1.0 - abs(dot(vNormal, vec3(0.0, 0.0, 1.0))), 2.0);
-  color += fresnel * vec3(0.85, 0.72, 0.25) * 0.3;
+  color += fresnel * vec3(1.0, 1.0, 1.0) * 0.3;
 
   // Gentle boost for HDR bloom pickup on bright edges
   color *= 1.0;

@@ -53,7 +53,7 @@ export function PageLoader() {
 
   return (
     <div
-      className={`fixed inset-0 z-[9998] flex flex-col items-center justify-center bg-background transition-opacity duration-500 ${
+      className={`fixed inset-0 z-[9998] flex flex-col items-center justify-center bg-surface transition-opacity duration-500 ${
         fading ? "opacity-0" : "opacity-100"
       }`}
     >
@@ -63,14 +63,14 @@ export function PageLoader() {
         alt=""
         aria-hidden="true"
         className="h-20 w-20 animate-[spin_4s_linear_infinite] opacity-40"
-        style={{ filter: "sepia(1) saturate(3) hue-rotate(10deg) brightness(0.8)" }}
+        style={{ filter: "grayscale(1) brightness(0.6)" }}
       />
 
       {/* Progress bar */}
-      <div className="mt-8 h-px w-48 overflow-hidden bg-surface-container">
+      <div className="mt-8 h-px w-48 overflow-hidden bg-surface-card">
         <div
           ref={progressRef}
-          className="h-full w-full origin-left bg-primary"
+          className="h-full w-full origin-left bg-heading"
           style={{ transform: "scaleX(0)" }}
         />
       </div>

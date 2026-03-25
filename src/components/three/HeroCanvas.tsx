@@ -11,7 +11,7 @@ const HeroScene = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="absolute inset-0 bg-surface-container-lowest" />
+      <div className="absolute inset-0 bg-surface" />
     ),
   },
 );
@@ -24,7 +24,7 @@ function StaticFallback() {
         alt=""
         aria-hidden="true"
         className="h-[300px] w-[300px] opacity-20 animate-[spin_60s_linear_infinite]"
-        style={{ filter: "sepia(1) saturate(3) hue-rotate(10deg) brightness(0.8)" }}
+        style={{ filter: "grayscale(1) brightness(0.6)" }}
       />
     </div>
   );
@@ -42,7 +42,7 @@ export function HeroCanvas() {
 
   // Still loading GPU detection
   if (gpuTier === null) {
-    return <div className="absolute right-0 top-0 bottom-0 w-[55vw] bg-surface-container-lowest md:w-[50vw] lg:w-[45vw]" />;
+    return <div className="absolute right-0 top-0 bottom-0 w-[55vw] bg-surface md:w-[50vw] lg:w-[45vw]" />;
   }
 
   // Tier 0 — no WebGL or very weak GPU
@@ -52,7 +52,7 @@ export function HeroCanvas() {
 
   return (
     <div className="absolute right-0 top-0 bottom-0 w-[55vw] opacity-60 md:w-[50vw] lg:w-[45vw]">
-      <div className="absolute inset-y-0 left-0 z-[1] w-1/3 bg-gradient-to-r from-background to-transparent" />
+      <div className="absolute inset-y-0 left-0 z-[1] w-1/3 bg-gradient-to-r from-surface to-transparent" />
       <HeroScene />
     </div>
   );

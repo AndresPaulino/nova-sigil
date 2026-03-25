@@ -41,7 +41,7 @@ export function Footer() {
   }, []);
 
   return (
-    <footer className="relative bg-surface-container-lowest overflow-hidden">
+    <footer className="relative bg-surface overflow-hidden">
       {/* Full-width sigil background */}
       <img
         ref={sigilRef}
@@ -66,14 +66,14 @@ export function Footer() {
         <div className="mx-auto flex max-w-7xl flex-col items-start gap-12 md:flex-row md:justify-between">
           {/* LEFT — Branding */}
           <div className="max-w-xs">
-            <span className="font-headline text-xl font-bold text-primary">
+            <span className="font-headline text-xl font-bold text-heading">
               Nova Sigil
             </span>
-            <p className="mt-4 text-sm leading-relaxed text-on-surface-variant opacity-80">
+            <p className="mt-4 text-sm leading-relaxed text-body opacity-80">
               Architecting high-performance digital infrastructure for the next
               generation of industry leaders.
             </p>
-            <p className="mt-4 text-sm italic text-on-surface-variant">
+            <p className="mt-4 text-sm italic text-body">
               &copy; 2026 Nova Sigil LLC
             </p>
           </div>
@@ -82,7 +82,7 @@ export function Footer() {
           <div className="grid grid-cols-2 gap-12 md:grid-cols-3 md:gap-24">
             {/* Navigation */}
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-widest text-primary">
+              <h4 className="text-xs font-bold uppercase tracking-widest text-label">
                 Navigation
               </h4>
               <ul className="mt-4 flex flex-col gap-3">
@@ -90,7 +90,7 @@ export function Footer() {
                   <li key={link.href}>
                     <a
                       href={link.href}
-                      className="text-sm text-on-surface-variant transition-colors duration-300 hover:text-primary"
+                      className="text-sm text-body transition-colors duration-300 hover:text-heading"
                     >
                       {link.label}
                     </a>
@@ -101,7 +101,7 @@ export function Footer() {
 
             {/* Connect */}
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-widest text-primary">
+              <h4 className="text-xs font-bold uppercase tracking-widest text-label">
                 Connect
               </h4>
               <ul className="mt-4 flex flex-col gap-3">
@@ -109,7 +109,7 @@ export function Footer() {
                   <li key={link.label}>
                     <a
                       href={link.href}
-                      className="text-sm text-on-surface-variant transition-colors duration-300 hover:text-primary"
+                      className="text-sm text-body transition-colors duration-300 hover:text-heading"
                     >
                       {link.label}
                     </a>
@@ -120,14 +120,14 @@ export function Footer() {
 
             {/* Inquiry */}
             <div>
-              <h4 className="text-xs font-bold uppercase tracking-widest text-primary">
+              <h4 className="text-xs font-bold uppercase tracking-widest text-label">
                 Inquiry
               </h4>
               <ul className="mt-4 flex flex-col gap-3">
                 <li>
                   <a
                     href="mailto:hello@novasigil.com"
-                    className="text-sm text-on-surface-variant transition-colors duration-300 hover:text-primary"
+                    className="text-sm text-body transition-colors duration-300 hover:text-heading"
                   >
                     hello@novasigil.com
                   </a>
@@ -139,7 +139,7 @@ export function Footer() {
 
         {/* Decorative bottom line */}
         <div className="mx-auto mt-16 max-w-7xl">
-          <div className="h-px bg-gradient-to-r from-transparent via-outline-variant/20 to-transparent" />
+          <div className="h-px bg-gradient-to-r from-transparent via-divider-hover/20 to-transparent" />
         </div>
       </div>
     </footer>

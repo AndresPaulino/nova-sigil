@@ -164,7 +164,7 @@ function FloatingSigil({
     >
       <meshBasicMaterial
         ref={materialRef}
-        color="#f2ca50"
+        color="#ffffff"
         wireframe
         transparent
         opacity={config.opacity}
@@ -238,7 +238,7 @@ void main() {
 
 // ─── Particle Constants ───
 
-const GOLD_COLOR = new THREE.Color("#f2ca50");
+const PARTICLE_COLOR = new THREE.Color("#ffffff");
 const PARTICLE_Z_MIN = -5;
 const PARTICLE_Z_MAX = -20;
 const PARTICLE_Z_MID = -12;
@@ -274,9 +274,9 @@ function GoldParticles({ count }: { count: number }) {
         pos[i3 + 1] = (Math.random() - 0.5) * PARTICLE_BOUNDS * 2;
         pos[i3 + 2] = PARTICLE_Z_MIN + Math.random() * (PARTICLE_Z_MAX - PARTICLE_Z_MIN);
 
-        col[i3] = GOLD_COLOR.r * 0.05;
-        col[i3 + 1] = GOLD_COLOR.g * 0.05;
-        col[i3 + 2] = GOLD_COLOR.b * 0.05;
+        col[i3] = PARTICLE_COLOR.r * 0.05;
+        col[i3 + 1] = PARTICLE_COLOR.g * 0.05;
+        col[i3 + 2] = PARTICLE_COLOR.b * 0.05;
 
         spd[i] = 0.001 + Math.random() * 0.004;
         freq[i] = 0.5 + Math.random() * 1.5;
@@ -358,9 +358,9 @@ function GoldParticles({ count }: { count: number }) {
       // Twinkle — modulate RGB brightness to simulate alpha with additive blending
       const twinkle = Math.sin(time * twinkleFreq[i] + twinklePhase[i]);
       const brightness = 0.02 + (twinkle * 0.5 + 0.5) * 0.06; // range [0.02, 0.08]
-      colArr[i3] = GOLD_COLOR.r * brightness;
-      colArr[i3 + 1] = GOLD_COLOR.g * brightness;
-      colArr[i3 + 2] = GOLD_COLOR.b * brightness;
+      colArr[i3] = PARTICLE_COLOR.r * brightness;
+      colArr[i3 + 1] = PARTICLE_COLOR.g * brightness;
+      colArr[i3 + 2] = PARTICLE_COLOR.b * brightness;
     }
 
     // Apply scroll parallax to group position

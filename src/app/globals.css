@@ -2,38 +2,40 @@
 
 /* ─── Design Token Custom Properties ─── */
 :root {
-  --background: #0c1322;
-  --primary: #f2ca50;
-  --primary-container: #d4af37;
-  --on-primary: #3c2f00;
-  --on-surface: #dce2f8;
-  --on-surface-variant: #d0c5af;
-  --surface-container: #191f2f;
-  --surface-container-high: #232a3a;
-  --surface-container-low: #111828;
-  --surface-container-lowest: #070e1d;
-  --outline-variant: #4d4635;
+  --bg-primary: #000000;
+  --bg-secondary: #0a0a0a;
+  --bg-tertiary: #111111;
+  --bg-elevated: #1a1a1a;
+  --text-primary: #ffffff;
+  --text-secondary: #999999;
+  --text-tertiary: #555555;
+  --text-muted: #333333;
+  --accent: #c8a84e;
+  --accent-hover: #dabb65;
+  --border-default: #1a1a1a;
+  --border-hover: #333333;
 }
 
 /* ─── Tailwind v4 Theme Extension ─── */
 @theme inline {
   /* Colors */
-  --color-background: var(--background);
-  --color-primary: var(--primary);
-  --color-primary-container: var(--primary-container);
-  --color-on-primary: var(--on-primary);
-  --color-on-surface: var(--on-surface);
-  --color-on-surface-variant: var(--on-surface-variant);
-  --color-surface-container: var(--surface-container);
-  --color-surface-container-high: var(--surface-container-high);
-  --color-surface-container-low: var(--surface-container-low);
-  --color-surface-container-lowest: var(--surface-container-lowest);
-  --color-outline-variant: var(--outline-variant);
+  --color-surface: var(--bg-primary);
+  --color-surface-alt: var(--bg-secondary);
+  --color-surface-card: var(--bg-tertiary);
+  --color-surface-elevated: var(--bg-elevated);
+  --color-heading: var(--text-primary);
+  --color-body: var(--text-secondary);
+  --color-label: var(--text-tertiary);
+  --color-muted: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-divider: var(--border-default);
+  --color-divider-hover: var(--border-hover);
 
   /* Fonts */
   --font-headline: var(--font-headline);
   --font-body: var(--font-body);
-  --font-label: var(--font-body);
+  --font-mono: var(--font-mono);
 
   /* Border radius — sharp, intentional */
   --radius-xs: 0.0625rem;
@@ -43,41 +45,45 @@
   --radius-xl: 0.5rem;
 }
 
-/* ─── Noise Overlay ─── */
+/* ─── Noise Overlay (white noise at 2% opacity) ─── */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: 9999;
   pointer-events: none;
-  opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' fill='white'/%3E%3C/svg%3E");
 }
 
 /* ─── Keyframes ─── */
 @keyframes breathe {
-  0% { transform: scale(0.9); }
-  100% { transform: scale(1.1); }
+  0% { transform: scale(0.95); }
+  100% { transform: scale(1.05); }
 }
 
 @keyframes gold-shimmer {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
+  0% { background-position: 0% 0%; }
+  100% { background-position: 100% 100%; }
 }
 
-/* ─── Gold Gradient Text ─── */
+/* ─── Gold Gradient Text (rare accent — hero "Sigil" only) ─── */
 .gold-gradient-text {
-  background: linear-gradient(90deg, #f2ca50, #d4af37, #e9c349, #f2ca50);
-  background-size: 200% 100%;
+  background: linear-gradient(135deg, #c8a84e, #dabb65, #c8a84e);
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: gold-shimmer 8s linear infinite;
+  animation: gold-shimmer 8s ease-in-out infinite alternate;
 }
 
 /* ─── Utilities ─── */
-.sigil-glow {
-  box-shadow: 0 0 40px rgba(242, 202, 80, 0.08);
+.glow-white {
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.03);
+}
+
+.glow-accent {
+  box-shadow: 0 0 30px rgba(200, 168, 78, 0.15);
 }
 
 .glass-panel {
@@ -91,22 +97,22 @@ body::before {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--surface-container-lowest);
+  background: #0a0a0a;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--primary-container);
+  background: #333333;
   border-radius: 0.125rem;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--primary);
+  background: #555555;
 }
 
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--primary-container) var(--surface-container-lowest);
+  scrollbar-color: #333333 #0a0a0a;
 }
 
 /* ─── Navbar Pill Transform ─── */
@@ -119,15 +125,15 @@ body::before {
 
 .nav-inner.nav-pill {
   max-width: 820px;
-  border-color: var(--outline-variant-10, rgba(77, 70, 53, 0.1));
+  border-color: rgba(26, 26, 26, 0.5);
   border-radius: 9999px;
-  background: rgba(25, 31, 47, 0.7);
+  background: rgba(10, 10, 10, 0.8);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
 }
 
-/* ─── Selection ─── */
+/* ─── Selection (gold — the one luxe touch) ─── */
 ::selection {
-  background-color: var(--primary-container);
-  color: var(--on-primary);
+  background-color: #c8a84e;
+  color: #000000;
 }
