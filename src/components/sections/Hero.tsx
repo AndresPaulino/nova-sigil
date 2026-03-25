@@ -7,7 +7,7 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="sticky top-0 z-[1] relative flex min-h-screen items-center overflow-hidden bg-surface"
+      className="relative z-[1] flex min-h-screen items-center overflow-hidden bg-surface"
     >
       {/* Background sigil watermark */}
       <img

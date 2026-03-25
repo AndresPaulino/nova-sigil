@@ -10,15 +10,15 @@ export function ScrollTransitions() {
   useEffect(() => {
     const triggers: ScrollTrigger[] = [];
 
-    // ─── Hero Perspective Scale (card-stacking) ───
+    // ─── Hero Perspective Scale (card-stacking, self-pinned) ───
     const hero = document.getElementById("hero");
-    const services = document.getElementById("services");
 
-    if (hero && services) {
+    if (hero) {
       const st = ScrollTrigger.create({
-        trigger: services,
-        start: "top bottom",
-        end: "top top",
+        trigger: hero,
+        start: "top top",
+        end: "+=50vh",
+        pin: true,
         scrub: 1.2,
         onUpdate: (self) => {
           const p = self.progress;
@@ -35,7 +35,7 @@ export function ScrollTransitions() {
     }
 
     // ─── Parallax H2 Headings ───
-    const headings = gsap.utils.toArray<HTMLElement>("section h2");
+    const headings = gsap.utils.toArray<HTMLElement>("section:not([data-no-h2-parallax]) h2");
     const vh = window.innerHeight;
 
     headings.forEach((h2) => {

@@ -38,7 +38,7 @@ export function SectionNumber({ number }: SectionNumberProps) {
     <span
       ref={ref}
       aria-hidden="true"
-      className="pointer-events-none absolute left-0 top-1/2 -translate-y-1/2 hidden select-none font-mono text-[10rem] font-extralight leading-none text-muted md:block"
+      className="pointer-events-none absolute -z-10 -left-4 top-1/2 -translate-y-1/2 hidden select-none font-mono text-[10rem] font-extralight leading-none text-[#1a1a1a] md:block"
     >
       {number}
     </span>

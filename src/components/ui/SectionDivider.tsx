@@ -31,7 +31,7 @@ export function SectionDivider() {
   return (
     <div
       ref={containerRef}
-      className="mx-auto max-w-lg px-8 py-8"
+      className="relative z-20 mx-auto max-w-lg px-8 py-8 bg-black/95"
       style={{ transform: "scaleX(0)", transformOrigin: "center center" }}
     >
       <svg

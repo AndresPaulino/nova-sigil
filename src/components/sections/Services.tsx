@@ -270,7 +270,7 @@ export function Services() {
   return (
     <section id="services" className="relative z-20">
       {/* Section header with kinetic typography */}
-      <div className="relative mx-auto max-w-7xl px-8 pt-28 pb-16 bg-surface-alt">
+      <div className="relative mx-auto max-w-7xl px-8 pt-28 pb-16 bg-[rgba(10,10,10,0.95)]">
         <SectionNumber number="01" />
         <CrosshairMarker className="absolute -left-8 top-8 text-label" />
         <span className="font-mono text-xs uppercase tracking-widest text-label">
@@ -295,7 +295,7 @@ export function Services() {
 
       {/* Desktop: Pinned scroll experience */}
       <div ref={sectionRef} className="relative hidden md:block" style={{ height: "250vh" }}>
-        <div className="sticky top-0 flex h-screen items-center overflow-hidden bg-surface-alt">
+        <div className="sticky top-0 flex h-screen items-center overflow-hidden bg-[rgba(10,10,10,0.95)]">
           <div className="relative mx-auto flex w-full max-w-7xl items-center gap-16 px-8">
             {/* Corner crosshairs */}
             <CrosshairMarker className="absolute -top-8 left-0 text-label" />
@@ -370,7 +370,7 @@ export function Services() {
       </div>
 
       {/* Mobile: Stacked layout */}
-      <div className="block space-y-16 bg-surface-alt px-8 pb-28 md:hidden">
+      <div className="block space-y-16 bg-[rgba(10,10,10,0.95)] px-8 pb-28 md:hidden">
         {SERVICES.map((service) => (
           <div key={service.label}>
             <span className="font-mono text-xs uppercase tracking-widest text-label">

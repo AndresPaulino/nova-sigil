@@ -226,7 +226,7 @@ export function Projects() {
   }, []);
 
   return (
-    <section id="projects" className="relative z-20 bg-surface">
+    <section id="projects" className="relative z-20 bg-black/95">
       {/* Header — normal flow, scrolls away before pin */}
       <div className="relative mx-auto max-w-7xl px-8 pt-28 pb-16">
         <CrosshairMarker className="absolute -top-8 left-0 text-label" />

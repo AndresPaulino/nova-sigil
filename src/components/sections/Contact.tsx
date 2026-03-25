@@ -62,7 +62,8 @@ export function Contact() {
   return (
     <section
       id="contact"
-      className="relative z-20 overflow-hidden bg-surface px-8 py-28"
+      data-no-h2-parallax
+      className="relative z-20 overflow-hidden bg-black/95 px-8 pt-36 pb-28"
     >
       {/* Ambient glow */}
       <div

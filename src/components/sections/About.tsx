@@ -145,7 +145,7 @@ export function About() {
   }, []);
 
   return (
-    <section id="about" className="relative z-20 overflow-hidden bg-surface-alt px-8 py-28">
+    <section id="about" data-no-h2-parallax className="relative z-20 overflow-hidden bg-[rgba(10,10,10,0.95)] px-8 py-28">
       <div className="relative mx-auto grid max-w-7xl items-center gap-12 md:grid-cols-2 md:gap-20">
         {/* Corner crosshairs */}
         <CrosshairMarker className="absolute -top-8 left-0 text-label" />

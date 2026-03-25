@@ -51,9 +51,9 @@ const COLOR_GOLD: [number, number, number] = [200, 168, 78];
 // ─── Words ───
 
 const WORDS = [
-  { text: "Precision.", threshold: 0.25, gold: false },
-  { text: "Craftsmanship.", threshold: 0.5, gold: false },
-  { text: "Code.", threshold: 0.75, gold: true },
+  { text: "Precision.", threshold: 0.20, gold: false },
+  { text: "Craftsmanship.", threshold: 0.45, gold: false },
+  { text: "Code.", threshold: 0.70, gold: true },
 ];
 
 // ─── Component ───
@@ -98,8 +98,9 @@ export function SigilInterstitial() {
       const st = ScrollTrigger.create({
         trigger: section,
         start: "top top",
-        end: "+=200vh",
+        end: "+=450vh",
         pin: true,
+        scrub: 2,
         onUpdate: animate,
       });
       return () => st.kill();
@@ -109,8 +110,9 @@ export function SigilInterstitial() {
       const st = ScrollTrigger.create({
         trigger: section,
         start: "top top",
-        end: "+=150vh",
+        end: "+=300vh",
         pin: true,
+        scrub: 2,
         onUpdate: animate,
       });
       return () => st.kill();
@@ -122,7 +124,7 @@ export function SigilInterstitial() {
   return (
     <div
       ref={sectionRef}
-      className="relative z-20 flex h-screen items-center justify-center overflow-hidden bg-surface"
+      className="relative z-20 flex h-screen items-center justify-center overflow-hidden bg-black/95"
     >
       {/* Massive rotating sigil */}
       <div

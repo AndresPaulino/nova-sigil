@@ -41,7 +41,7 @@ export function Footer() {
   }, []);
 
   return (
-    <footer className="relative bg-surface overflow-hidden">
+    <footer className="relative z-20 bg-black/95 overflow-hidden">
       {/* Full-width sigil background */}
       <img
         ref={sigilRef}
