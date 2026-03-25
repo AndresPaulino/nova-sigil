@@ -154,7 +154,7 @@ export function Projects() {
         scrollTrigger: {
           trigger: pin,
           start: "top top",
-          end: `+=${scrollDistance * 2}`,
+          end: `+=${scrollDistance * 1.5}`,
           pin: true,
           scrub: 1,
           invalidateOnRefresh: true,
@@ -179,7 +179,7 @@ export function Projects() {
           scrollTrigger: {
             trigger: pin,
             start: "top top",
-            end: `+=${scrollDistance * 2}`,
+            end: `+=${scrollDistance * 1.5}`,
             scrub: 1,
           },
         });
@@ -256,10 +256,10 @@ export function Projects() {
             <article
               key={project.title}
               data-project-card
-              className="w-[80vw] shrink-0 group"
+              className="w-[70vw] shrink-0 group"
             >
               <SpotlightCard
-                className={`relative aspect-[16/10] overflow-hidden rounded-lg border border-divider bg-surface-card transition-all duration-300 group-hover:border-divider-hover ${
+                className={`relative aspect-[16/9] overflow-hidden rounded-lg border border-divider bg-surface-card transition-all duration-300 group-hover:border-divider-hover ${
                   project.featured ? "glow-white" : ""
                 }`}
               >
