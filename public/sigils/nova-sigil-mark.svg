@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="500" height="500" fill="none">
-  <circle cx="250.0" cy="250.0" r="180" stroke="#f2ca50" stroke-width="1.0" stroke-opacity="0.6"/>
-  <circle cx="250.0" cy="250.0" r="125.99999999999999" stroke="#f2ca50" stroke-width="0.6" stroke-opacity="0.4"/>
-  <polygon points="250.0,84.4 415.6,250.0 250.0,415.6 84.4,250.0" stroke="#f2ca50" stroke-width="0.9" stroke-opacity="0.55"/>
-  <rect x="133.0" y="133.0" width="234.0" height="234.0" stroke="#f2ca50" stroke-width="0.6" stroke-opacity="0.35"/>
-  <g stroke="#f2ca50" stroke-width="0.5" stroke-opacity="0.3">
+  <circle cx="250.0" cy="250.0" r="180" stroke="#c8a84e" stroke-width="1.0" stroke-opacity="0.6"/>
+  <circle cx="250.0" cy="250.0" r="125.99999999999999" stroke="#c8a84e" stroke-width="0.6" stroke-opacity="0.4"/>
+  <polygon points="250.0,84.4 415.6,250.0 250.0,415.6 84.4,250.0" stroke="#c8a84e" stroke-width="0.9" stroke-opacity="0.55"/>
+  <rect x="133.0" y="133.0" width="234.0" height="234.0" stroke="#c8a84e" stroke-width="0.6" stroke-opacity="0.35"/>
+  <g stroke="#c8a84e" stroke-width="0.5" stroke-opacity="0.3">
     <line x1="70.0" y1="250.0" x2="430.0" y2="250.0"/>
     <line x1="250.0" y1="70.0" x2="250.0" y2="430.0"/>
   </g>
-  <g stroke="#f2ca50" stroke-width="0.4" stroke-opacity="0.2">
+  <g stroke="#c8a84e" stroke-width="0.4" stroke-opacity="0.2">
     <line x1="84.4" y1="84.4" x2="415.6" y2="415.6"/>
     <line x1="415.6" y1="84.4" x2="84.4" y2="415.6"/>
   </g>
-  <g stroke="#f2ca50" stroke-width="0.7" stroke-opacity="0.5">
+  <g stroke="#c8a84e" stroke-width="0.7" stroke-opacity="0.5">
     <circle cx="376.00" cy="250.00" r="6"/>
     <circle cx="339.10" cy="339.10" r="6"/>
     <circle cx="250.00" cy="376.00" r="6"/>
@@ -22,10 +22,10 @@
     <circle cx="250.00" cy="124.00" r="6"/>
     <circle cx="339.10" cy="160.90" r="6"/>
   </g>
-  <circle cx="250.0" cy="250.0" r="12" stroke="#f2ca50" stroke-width="1.0" stroke-opacity="0.7"/>
-  <circle cx="250.0" cy="250.0" r="4" stroke="#f2ca50" stroke-width="1.5" stroke-opacity="0.9"/>
-  <polygon points="250.0,97.0 257.0,111.0 243.0,111.0" stroke="#f2ca50" stroke-width="0.8" stroke-opacity="0.5"/>
-  <polygon points="403.0,250.0 389.0,257.0 389.0,243.0" stroke="#f2ca50" stroke-width="0.8" stroke-opacity="0.5"/>
-  <polygon points="250.0,403.0 243.0,389.0 257.0,389.0" stroke="#f2ca50" stroke-width="0.8" stroke-opacity="0.5"/>
-  <polygon points="97.0,250.0 111.0,243.0 111.0,257.0" stroke="#f2ca50" stroke-width="0.8" stroke-opacity="0.5"/>
+  <circle cx="250.0" cy="250.0" r="12" stroke="#c8a84e" stroke-width="1.0" stroke-opacity="0.7"/>
+  <circle cx="250.0" cy="250.0" r="4" stroke="#c8a84e" stroke-width="1.5" stroke-opacity="0.9"/>
+  <polygon points="250.0,97.0 257.0,111.0 243.0,111.0" stroke="#c8a84e" stroke-width="0.8" stroke-opacity="0.5"/>
+  <polygon points="403.0,250.0 389.0,257.0 389.0,243.0" stroke="#c8a84e" stroke-width="0.8" stroke-opacity="0.5"/>
+  <polygon points="250.0,403.0 243.0,389.0 257.0,389.0" stroke="#c8a84e" stroke-width="0.8" stroke-opacity="0.5"/>
+  <polygon points="97.0,250.0 111.0,243.0 111.0,257.0" stroke="#c8a84e" stroke-width="0.8" stroke-opacity="0.5"/>
 </svg>

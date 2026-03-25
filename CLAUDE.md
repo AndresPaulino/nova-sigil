@@ -2,7 +2,7 @@
 
 ## Project Overview
 Award-caliber landing page for Nova Sigil, a software development studio.
-Dark navy (#0c1322) + gold (#f2ca50, #d4af37) palette with occult sigil motifs.
+Luxury black/white/gray palette with restrained gold (#c8a84e) accents and occult sigil motifs.
 Built with Next.js 15 App Router, TypeScript strict mode, Tailwind CSS.
 
 ## Tech Stack

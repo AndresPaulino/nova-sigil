@@ -12,11 +12,13 @@ description: >
 # Nova Sigil Build Skill
 
 ## Design System Quick Reference
-- Background: #0c1322 | Gold: #f2ca50 | Gold dark: #d4af37
-- Fonts: Space Grotesk (headlines), Manrope (body)
+- Background tiers: #000000 (surface) | #0a0a0a (surface-alt) | #111111 (surface-card)
+- Text: #ffffff (heading) | #999999 (body) | #555555 (label) | #333333 (muted)
+- Gold accent (RARE — CTAs, "Sigil" text, focused inputs only): #c8a84e | hover: #dabb65
+- Fonts: Space Grotesk (headlines), Outfit (body), JetBrains Mono (mono)
 - All 3D materials use emissiveIntensity > 2 with toneMapped={false}
-- Bloom: luminanceThreshold={1}, intensity={2}, radius={0.4}
-- Noise overlay at 3-5% opacity on all dark sections
+- Bloom: luminanceThreshold={2.5}, intensity={0.3}
+- Noise overlay at 2% opacity on body
 
 ## Architecture Pattern
 Every page section follows this pattern:
@@ -29,7 +31,7 @@ Every page section follows this pattern:
 ## 3D Sigil Implementation
 - Central sigil: IcosahedronGeometry(1, 64) with custom ShaderMaterial
 - Vertex shader: Perlin noise displacement bound to scroll uniform
-- Fragment shader: cosine palette mapping gold (#f2ca50) to navy (#0c1322)
+- Fragment shader: cosine palette mapping with emissive white/gray tones
 - Mouse parallax: camera.position.lerp(mouse * 2, 0.02)
 - Scroll velocity feeds into shader uStrength for "charging" effect
 - Post-processing: Bloom (mipmapBlur, threshold=1) + Vignette
