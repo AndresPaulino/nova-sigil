@@ -7,8 +7,11 @@ export function ScrollProgress() {
 
   return (
     <motion.div
-      className="fixed left-0 top-0 z-[10000] h-[3px] w-full origin-left bg-heading"
-      style={{ scaleX: scrollYProgress }}
+      className="fixed left-0 top-0 z-[10000] h-[3px] w-full origin-left"
+      style={{
+        scaleX: scrollYProgress,
+        background: "linear-gradient(to right, #333333, #ffffff)",
+      }}
     />
   );
 }

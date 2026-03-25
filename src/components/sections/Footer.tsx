@@ -73,7 +73,7 @@ export function Footer() {
               Architecting high-performance digital infrastructure for the next
               generation of industry leaders.
             </p>
-            <p className="mt-4 text-sm italic text-body">
+            <p className="mt-4 text-sm text-label">
               &copy; 2026 Nova Sigil LLC
             </p>
           </div>
@@ -139,7 +139,7 @@ export function Footer() {
 
         {/* Decorative bottom line */}
         <div className="mx-auto mt-16 max-w-7xl">
-          <div className="h-px bg-gradient-to-r from-transparent via-divider-hover/20 to-transparent" />
+          <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         </div>
       </div>
     </footer>

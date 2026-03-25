@@ -69,7 +69,7 @@ export function Contact() {
         ref={glowRef}
         className="pointer-events-none absolute inset-0"
         style={{
-          background: "radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 60%)",
+          background: "radial-gradient(600px circle at 50% 50%, rgba(200,168,78,0.04), transparent 70%)",
           transform: "scale(0)",
           opacity: 0,
         }}
@@ -77,10 +77,10 @@ export function Contact() {
 
       {/* Background sigil */}
       <img
-        src="/sigils/sri-yantra.svg"
+        src="/sigils/metatrons-cube.svg"
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute left-0 top-1/2 h-[600px] w-[600px] -translate-x-1/4 -translate-y-1/2 select-none opacity-[0.04]"
+        className="pointer-events-none absolute right-0 top-1/2 h-[600px] w-[600px] translate-x-1/4 -translate-y-1/2 select-none opacity-[0.02] animate-[spin_60s_linear_infinite]"
       />
 
       <div className="relative mx-auto grid max-w-7xl gap-16 md:grid-cols-5">
@@ -131,7 +131,7 @@ export function Contact() {
         >
           <form
             onSubmit={handleSubmit}
-            className="rounded-md border border-divider bg-surface-alt p-8 md:p-12"
+            className="rounded-md border border-divider bg-surface-card p-8 md:p-12"
           >
             <motion.div
               className="flex flex-col gap-8"

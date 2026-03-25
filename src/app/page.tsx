@@ -16,12 +16,11 @@ export default function Home() {
       <ScrollTransitions />
 
       <main id="main">
-        <div style={{ perspective: "1200px" }}>
-          <Hero />
-        </div>
-        <SectionDivider />
+        <Hero />
         <Services />
+        <SectionDivider />
         <SigilInterstitial />
+        <SectionDivider />
         <Projects />
         <SectionDivider />
         <About />

@@ -31,7 +31,8 @@ export function BackgroundCanvas() {
 
   return (
     <div
-      className="fixed inset-0 z-0 opacity-70 pointer-events-none"
+      className="fixed inset-0 z-0 pointer-events-none"
+      style={{ opacity: 0.6 }}
       aria-hidden="true"
     >
       <BackgroundSigils />

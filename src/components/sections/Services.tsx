@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CrosshairMarker } from "@/components/ui/CrosshairMarker";
+import { SectionNumber } from "@/components/ui/SectionNumber";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -129,16 +130,53 @@ const SERVICES = [
   },
 ];
 
+// ─── Kinetic Heading ───
+
+const HEADING_WORDS = ["Core", "Expertise"];
+
 // ─── Component ───
 
 export function Services() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
   const textRefs = useRef<(HTMLDivElement | null)[]>([null, null, null]);
   const sigilRefs = useRef<(HTMLDivElement | null)[]>([null, null, null]);
   const sigilContainerRef = useRef<HTMLDivElement>(null);
   const counterRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
+    const triggers: ScrollTrigger[] = [];
+
+    // Kinetic typography — word-by-word highlight (all viewports)
+    const headingEl = headingRef.current;
+    if (headingEl) {
+      const words =
+        headingEl.querySelectorAll<HTMLElement>("[data-kinetic-word]");
+      const wordCount = words.length;
+
+      const st = ScrollTrigger.create({
+        trigger: headingEl,
+        start: "top 80%",
+        end: "top 30%",
+        scrub: 1,
+        onUpdate: (self) => {
+          const p = self.progress;
+          words.forEach((word, i) => {
+            const wordStart = i / (wordCount + 0.5);
+            const wordEnd = (i + 1.5) / (wordCount + 0.5);
+            const t = Math.min(
+              1,
+              Math.max(0, (p - wordStart) / (wordEnd - wordStart)),
+            );
+            // Interpolate from #555555 (85) to #ffffff (255)
+            const gray = Math.round(85 + t * 170);
+            word.style.color = `rgb(${gray},${gray},${gray})`;
+          });
+        },
+      });
+      triggers.push(st);
+    }
+
     const mm = gsap.matchMedia();
 
     mm.add("(min-width: 768px)", () => {
@@ -223,11 +261,38 @@ export function Services() {
       return () => st.kill();
     });
 
-    return () => mm.revert();
+    return () => {
+      triggers.forEach((st) => st.kill());
+      mm.revert();
+    };
   }, []);
 
   return (
     <section id="services" className="relative z-20">
+      {/* Section header with kinetic typography */}
+      <div className="relative mx-auto max-w-7xl px-8 pt-28 pb-16 bg-surface-alt">
+        <SectionNumber number="01" />
+        <CrosshairMarker className="absolute -left-8 top-8 text-label" />
+        <span className="font-mono text-xs uppercase tracking-widest text-label">
+          What We Do
+        </span>
+        <h2
+          ref={headingRef}
+          className="mt-4 font-headline text-5xl font-bold md:text-6xl"
+        >
+          {HEADING_WORDS.map((word) => (
+            <span
+              key={word}
+              data-kinetic-word
+              className="mr-[0.3em] inline-block text-label"
+            >
+              {word}
+            </span>
+          ))}
+        </h2>
+        <CrosshairMarker className="absolute -right-8 top-8 text-label" />
+      </div>
+
       {/* Desktop: Pinned scroll experience */}
       <div ref={sectionRef} className="relative hidden md:block" style={{ height: "250vh" }}>
         <div className="sticky top-0 flex h-screen items-center overflow-hidden bg-surface-alt">
@@ -305,7 +370,7 @@ export function Services() {
       </div>
 
       {/* Mobile: Stacked layout */}
-      <div className="block space-y-16 bg-surface-alt px-8 py-28 md:hidden">
+      <div className="block space-y-16 bg-surface-alt px-8 pb-28 md:hidden">
         {SERVICES.map((service) => (
           <div key={service.label}>
             <span className="font-mono text-xs uppercase tracking-widest text-label">

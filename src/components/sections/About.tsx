@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextReveal } from "@/components/ui/TextReveal";
 import { SectionNumber } from "@/components/ui/SectionNumber";
 import { CrosshairMarker } from "@/components/ui/CrosshairMarker";
+import { SpotlightCard } from "@/components/ui/SpotlightCard";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -40,44 +41,22 @@ function MaterialIcon({
   );
 }
 
-// ─── Inline Nova Sigil Mark ───
+// ─── Inline Seed of Life ───
 
-function SigilMark({ className }: { className?: string }) {
+function SeedOfLife({ className }: { className?: string }) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 500 500"
-      fill="none"
-      className={className}
-    >
-      <circle cx="250" cy="250" r="180" stroke="currentColor" strokeWidth="1" strokeOpacity="0.6" />
-      <circle cx="250" cy="250" r="126" stroke="currentColor" strokeWidth="0.6" strokeOpacity="0.4" />
-      <polygon points="250,84.4 415.6,250 250,415.6 84.4,250" stroke="currentColor" strokeWidth="0.9" strokeOpacity="0.55" />
-      <rect x="133" y="133" width="234" height="234" stroke="currentColor" strokeWidth="0.6" strokeOpacity="0.35" />
-      <g stroke="currentColor" strokeWidth="0.5" strokeOpacity="0.3">
-        <line x1="70" y1="250" x2="430" y2="250" />
-        <line x1="250" y1="70" x2="250" y2="430" />
+    <svg viewBox="0 0 500 500" fill="none" className={className}>
+      <g stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.6">
+        <circle cx="250" cy="250" r="80" />
+        <circle cx="250" cy="170" r="80" />
+        <circle cx="319.28" cy="210" r="80" />
+        <circle cx="319.28" cy="290" r="80" />
+        <circle cx="250" cy="330" r="80" />
+        <circle cx="180.72" cy="290" r="80" />
+        <circle cx="180.72" cy="210" r="80" />
       </g>
-      <g stroke="currentColor" strokeWidth="0.4" strokeOpacity="0.2">
-        <line x1="84.4" y1="84.4" x2="415.6" y2="415.6" />
-        <line x1="415.6" y1="84.4" x2="84.4" y2="415.6" />
-      </g>
-      <g stroke="currentColor" strokeWidth="0.7" strokeOpacity="0.5">
-        <circle cx="376" cy="250" r="6" />
-        <circle cx="339.1" cy="339.1" r="6" />
-        <circle cx="250" cy="376" r="6" />
-        <circle cx="160.9" cy="339.1" r="6" />
-        <circle cx="124" cy="250" r="6" />
-        <circle cx="160.9" cy="160.9" r="6" />
-        <circle cx="250" cy="124" r="6" />
-        <circle cx="339.1" cy="160.9" r="6" />
-      </g>
-      <circle cx="250" cy="250" r="12" stroke="currentColor" strokeWidth="1" strokeOpacity="0.7" />
-      <circle cx="250" cy="250" r="4" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.9" />
-      <polygon points="250,97 257,111 243,111" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.5" />
-      <polygon points="403,250 389,257 389,243" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.5" />
-      <polygon points="250,403 243,389 257,389" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.5" />
-      <polygon points="97,250 111,243 111,257" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.5" />
+      <circle cx="250" cy="250" r="88" stroke="currentColor" strokeWidth="0.5" strokeOpacity="0.35" />
+      <circle cx="250" cy="250" r="164" stroke="currentColor" strokeWidth="0.4" strokeOpacity="0.2" />
     </svg>
   );
 }
@@ -131,8 +110,8 @@ export function About() {
     // Left column: slide in from left
     const stLeft = ScrollTrigger.create({
       trigger: left,
-      start: "top 85%",
-      end: "top 30%",
+      start: "top 80%",
+      end: "top 40%",
       scrub: 1.2,
       onUpdate: (self) => {
         const p = self.progress;
@@ -147,8 +126,8 @@ export function About() {
     // Right column: slide in from right
     const stRight = ScrollTrigger.create({
       trigger: right,
-      start: "top 85%",
-      end: "top 30%",
+      start: "top 80%",
+      end: "top 40%",
       scrub: 1.2,
       onUpdate: (self) => {
         const p = self.progress;
@@ -171,22 +150,23 @@ export function About() {
         {/* Corner crosshairs */}
         <CrosshairMarker className="absolute -top-8 left-0 text-label" />
         <CrosshairMarker className="absolute -top-8 right-0 text-label" />
+
         {/* LEFT — Sigil Visual */}
         <div
           ref={leftRef}
           className="relative"
           style={{ opacity: 0, transform: "translateX(-100px)" }}
         >
-          <div className="aspect-square overflow-hidden bg-gradient-to-tr from-surface-card to-surface-alt">
-            <SigilMark className="h-full w-full animate-[spin_60s_linear_infinite] text-muted p-12" />
+          <div className="aspect-square overflow-hidden">
+            <SeedOfLife className="h-full w-full animate-[spin_60s_linear_infinite] text-white/[0.08] p-12" />
           </div>
 
-          {/* Experience badge */}
-          <div className="absolute -bottom-6 -right-6 hidden rounded-md bg-surface-elevated p-8 md:block">
-            <span className="block font-headline text-4xl font-bold text-heading">
+          {/* Experience stat */}
+          <div className="absolute -bottom-6 -right-6 hidden md:block">
+            <span className="block font-headline text-[5rem] font-bold leading-none text-heading">
               12+
             </span>
-            <span className="text-xs font-semibold uppercase tracking-widest text-label">
+            <span className="font-mono text-xs uppercase tracking-widest text-label">
               Years Experience
             </span>
           </div>
@@ -214,7 +194,7 @@ export function About() {
             same reverence a master smith gives to an heirloom blade.
           </p>
 
-          {/* Feature bullets — keep Framer Motion */}
+          {/* Feature bullets */}
           <motion.div
             className="mt-10 flex flex-col gap-8"
             variants={bulletContainerVariants}
@@ -226,19 +206,20 @@ export function About() {
               <motion.div
                 key={feat.title}
                 variants={bulletVariants}
-                className="flex gap-5"
               >
-                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-divider-hover">
-                  <MaterialIcon name={feat.icon} className="text-body" />
-                </div>
-                <div>
-                  <h4 className="text-lg font-bold text-heading">
-                    {feat.title}
-                  </h4>
-                  <p className="mt-1 text-sm leading-relaxed text-body">
-                    {feat.description}
-                  </p>
-                </div>
+                <SpotlightCard className="flex gap-5 rounded-lg p-4 -m-4">
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/20">
+                    <MaterialIcon name={feat.icon} className="text-white" />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-bold text-heading">
+                      {feat.title}
+                    </h4>
+                    <p className="mt-1 text-sm leading-relaxed text-body">
+                      {feat.description}
+                    </p>
+                  </div>
+                </SpotlightCard>
               </motion.div>
             ))}
           </motion.div>

@@ -24,6 +24,7 @@ export function ScrollTransitions() {
           const p = self.progress;
           gsap.set(hero, {
             scale: 1 - 0.05 * p,
+            transformPerspective: 1200,
             rotateX: 2 * p,
             filter: `brightness(${1 - 0.5 * p})`,
             borderRadius: `${24 * p}px`,

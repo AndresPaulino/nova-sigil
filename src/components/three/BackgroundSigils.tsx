@@ -27,11 +27,11 @@ interface SigilConfig {
 // ─── Constants ───
 
 const ALL_SIGIL_CONFIGS: SigilConfig[] = [
-  { url: "/sigils/flower-of-life.svg", position: [-3.5, 2, -8], scale: 1.2, opacity: 0.12, rotation: [0, 0, 0.001], extrudeDepth: 0.05 },
-  { url: "/sigils/metatrons-cube.svg", position: [3, -1, -12], scale: 1.5, opacity: 0.08, rotation: [0, 0.0008, 0], extrudeDepth: 0.03 },
-  { url: "/sigils/sri-yantra.svg", position: [-2, -3, -10], scale: 1.0, opacity: 0.1, rotation: [0, 0, -0.0006], extrudeDepth: 0.04 },
-  { url: "/sigils/seed-of-life.svg", position: [4, 3, -6], scale: 0.8, opacity: 0.15, rotation: [0.0005, 0, 0], extrudeDepth: 0.06 },
-  { url: "/sigils/nova-sigil-mark.svg", position: [-4, 0, -15], scale: 1.8, opacity: 0.06, rotation: [0, -0.0004, 0.0003], extrudeDepth: 0.02 },
+  { url: "/sigils/flower-of-life.svg", position: [-3, 2, -8], scale: 2.5, opacity: 0.03, rotation: [0, 0.001, 0], extrudeDepth: 0.02 },
+  { url: "/sigils/metatrons-cube.svg", position: [4, -3, -12], scale: 3.0, opacity: 0.02, rotation: [0, 0, 0.0008], extrudeDepth: 0.02 },
+  { url: "/sigils/seed-of-life.svg", position: [-5, -6, -6], scale: 1.5, opacity: 0.04, rotation: [0, -0.0012, 0], extrudeDepth: 0.02 },
+  { url: "/sigils/sri-yantra.svg", position: [6, 5, -15], scale: 4.0, opacity: 0.015, rotation: [0, 0.0005, 0], extrudeDepth: 0.02 },
+  { url: "/sigils/nova-sigil-mark.svg", position: [0, -8, -10], scale: 2.0, opacity: 0.025, rotation: [0, 0, -0.001], extrudeDepth: 0.02 },
 ];
 
 const LINE_HALF_WIDTH = 0.25;
@@ -124,7 +124,7 @@ function FloatingSigil({
   const reducedMotion = useReducedMotion();
 
   const [baseX, baseY, z] = config.position;
-  const parallaxSpeed = THREE.MathUtils.mapLinear(z, -6, -15, -2, -0.5);
+  const parallaxSpeed = THREE.MathUtils.mapLinear(z, -6, -15, -3, -0.8);
   const mouseStrength = 5 / Math.abs(z);
 
   useEffect(() => {
@@ -147,8 +147,8 @@ function FloatingSigil({
     // Mouse parallax (lerped for smoothness)
     const targetX = (mousePos.x - 0.5) * -0.3 * mouseStrength;
     const targetY = (mousePos.y - 0.5) * -0.3 * mouseStrength;
-    offsetRef.current.x += (targetX - offsetRef.current.x) * 0.05;
-    offsetRef.current.y += (targetY - offsetRef.current.y) * 0.05;
+    offsetRef.current.x += (targetX - offsetRef.current.x) * 0.02;
+    offsetRef.current.y += (targetY - offsetRef.current.y) * 0.02;
 
     meshRef.current.position.x = baseX + offsetRef.current.x;
     meshRef.current.position.y = scrollY + offsetRef.current.y;
@@ -243,8 +243,8 @@ const PARTICLE_Z_MIN = -5;
 const PARTICLE_Z_MAX = -20;
 const PARTICLE_Z_MID = -12;
 const PARTICLE_BOUNDS = 20;
-const REPULSION_RADIUS = 3;
-const REPULSION_STRENGTH = 0.5;
+const REPULSION_RADIUS = 2;
+const REPULSION_STRENGTH = 0.3;
 const REPULSION_DECAY = 0.03;
 
 // Cached vectors to avoid GC pressure in useFrame
@@ -278,7 +278,7 @@ function GoldParticles({ count }: { count: number }) {
         col[i3 + 1] = PARTICLE_COLOR.g * 0.05;
         col[i3 + 2] = PARTICLE_COLOR.b * 0.05;
 
-        spd[i] = 0.001 + Math.random() * 0.004;
+        spd[i] = 0.002 + Math.random() * 0.006;
         freq[i] = 0.5 + Math.random() * 1.5;
         phase[i] = Math.random() * Math.PI * 2;
         repX[i] = 0;
@@ -297,7 +297,7 @@ function GoldParticles({ count }: { count: number }) {
     }, [count]);
 
   const parallaxSpeed = THREE.MathUtils.mapLinear(
-    PARTICLE_Z_MID, -6, -15, -2, -0.5,
+    PARTICLE_Z_MID, -6, -15, -3, -0.8,
   );
 
   useFrame(({ clock }) => {
@@ -357,7 +357,7 @@ function GoldParticles({ count }: { count: number }) {
 
       // Twinkle — modulate RGB brightness to simulate alpha with additive blending
       const twinkle = Math.sin(time * twinkleFreq[i] + twinklePhase[i]);
-      const brightness = 0.02 + (twinkle * 0.5 + 0.5) * 0.06; // range [0.02, 0.08]
+      const brightness = 0.02 + (twinkle * 0.5 + 0.5) * 0.04; // range [0.02, 0.06]
       colArr[i3] = PARTICLE_COLOR.r * brightness;
       colArr[i3 + 1] = PARTICLE_COLOR.g * brightness;
       colArr[i3 + 2] = PARTICLE_COLOR.b * brightness;
@@ -387,7 +387,7 @@ function GoldParticles({ count }: { count: number }) {
       <shaderMaterial
         vertexShader={particleVertexShader}
         fragmentShader={particleFragmentShader}
-        uniforms={{ uSize: { value: 0.8 } }}
+        uniforms={{ uSize: { value: 1.5 } }}
         transparent
         blending={THREE.AdditiveBlending}
         depthWrite={false}
@@ -434,7 +434,7 @@ function Starscape() {
   }, []);
 
   const parallaxSpeed = THREE.MathUtils.mapLinear(
-    STAR_Z_MID, -6, -15, -2, -0.5,
+    STAR_Z_MID, -6, -15, -3, -0.8,
   );
 
   useFrame(({ clock }) => {
@@ -459,9 +459,9 @@ function Starscape() {
         posArr[i3] = (Math.random() - 0.5) * PARTICLE_BOUNDS * 2;
       }
 
-      // Twinkle — dim white, range [0.03, 0.06]
+      // Twinkle — dim white, range [0.02, 0.05]
       const twinkle = Math.sin(time * twinkleFreq[i] + twinklePhase[i]);
-      const brightness = 0.03 + (twinkle * 0.5 + 0.5) * 0.03;
+      const brightness = 0.02 + (twinkle * 0.5 + 0.5) * 0.03;
       colArr[i3] = brightness;
       colArr[i3 + 1] = brightness;
       colArr[i3 + 2] = brightness;
@@ -491,7 +491,7 @@ function Starscape() {
       <shaderMaterial
         vertexShader={particleVertexShader}
         fragmentShader={particleFragmentShader}
-        uniforms={{ uSize: { value: 0.5 } }}
+        uniforms={{ uSize: { value: 0.8 } }}
         transparent
         blending={THREE.AdditiveBlending}
         depthWrite={false}
@@ -565,8 +565,8 @@ function Scene({
         <EffectComposer>
           <Bloom
             mipmapBlur
-            luminanceThreshold={2.0}
-            intensity={0.4}
+            luminanceThreshold={2.5}
+            intensity={0.3}
             radius={0.2}
           />
         </EffectComposer>
@@ -585,7 +585,7 @@ export function BackgroundSigils() {
 
   return (
     <Canvas
-      dpr={[1, 1]}
+      dpr={[1, 1.5]}
       frameloop={reducedMotion ? "demand" : "always"}
       camera={{ position: [0, 0, 5], fov: 50 }}
       gl={{ antialias: false, alpha: true }}
