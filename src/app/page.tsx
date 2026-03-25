@@ -6,6 +6,7 @@ import { About } from "@/components/sections/About";
 import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/sections/Footer";
 import { ScrollTransitions } from "@/lib/ScrollTransitions";
+import { SigilInterstitial } from "@/components/sections/SigilInterstitial";
 import { SectionDivider } from "@/components/ui/SectionDivider";
 
 export default function Home() {
@@ -20,7 +21,7 @@ export default function Home() {
         </div>
         <SectionDivider />
         <Services />
-        <SectionDivider />
+        <SigilInterstitial />
         <Projects />
         <SectionDivider />
         <About />

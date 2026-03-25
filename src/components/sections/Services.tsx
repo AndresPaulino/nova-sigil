@@ -1,44 +1,104 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { SectionNumber } from "@/components/ui/SectionNumber";
 import { CrosshairMarker } from "@/components/ui/CrosshairMarker";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ─── Material Symbols Outlined (viewBox 0 -960 960 960) ───
+// ─── Inline Sigil SVGs ───
 
-const ICONS = {
-  code: "M320-240 80-480l240-240 57 57-184 183 184 183-57 57Zm320 0-57-57 184-183-184-183 57-57 240 240-240 240Z",
-  cloud_done:
-    "M424-328 292-460l56-56 76 76 148-148 56 56-204 204ZM260-160q-91 0-155.5-63T40-377q0-78 47-139t123-78q25-92 100-149t170-57q117 0 198.5 81.5T760-520q69 8 114.5 59.5T920-340q0 75-52.5 127.5T740-160H260Z",
-  hub: "M480-80q-33 0-56.5-23.5T400-160q0-23 12.5-42.5T445-232v-128q-20-8-36-21.5T383-410l-111 64q5 13 6.5 26.5T280-293q0 56-39 94.5T147-160q-56 0-95.5-39T13-293q0-56 39-95.5t94-39.5q17 0 33 4t31 12l111-64q-3-7-5-14.5t-2-15.5q0-8 2-15.5t5-14.5l-111-64q-15 8-31 12t-33 4q-55 0-94-39.5T13-667q0-56 38.5-95.5T147-802q56 0 94 39.5t38 95.5q0 13-1.5 26.5T271-614l111 64q10-15 26-28.5t36-21.5v-128q-20-10-32.5-29T399-800q0-33 23.5-56.5T479-880q33 0 56.5 23.5T559-800q0 24-12.5 42.5T514-728v128q20 8 36 21.5t26 28.5l111-64q-5-13-6.5-26.5T679-667q0-56 38-95.5t94-39.5q56 0 95.5 39.5T945-667q0 56-39.5 95.5T811-532q-17 0-33-4t-31-12L636-484q3 7 5 14.5t2 15.5q0 8-2 15.5t-5 14.5l111 64q15-8 31-12t33-4q56 0 95.5 39.5T945-293q0 55-39.5 94.5T811-160q-55 0-94-38.5T679-293q0-13 1.5-26.5T687-346l-111-64q-10 15-26 28.5T514-360v128q20 10 32.5 29.5T559-160q0 33-23.5 56.5T479-80Z",
-} as const;
-
-type IconName = keyof typeof ICONS;
-
-function MaterialIcon({
-  name,
-  size = 48,
-  className = "",
-}: {
-  name: IconName;
-  size?: number;
-  className?: string;
-}) {
+function NovaSigilMark({ className }: { className?: string }) {
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={size}
-      height={size}
-      viewBox="0 -960 960 960"
-      fill="currentColor"
-      className={className}
-    >
-      <path d={ICONS[name]} />
+    <svg viewBox="0 0 500 500" fill="none" className={className}>
+      <circle cx="250" cy="250" r="180" stroke="currentColor" strokeWidth="1" strokeOpacity="0.6" />
+      <circle cx="250" cy="250" r="126" stroke="currentColor" strokeWidth="0.6" strokeOpacity="0.4" />
+      <polygon points="250,84.4 415.6,250 250,415.6 84.4,250" stroke="currentColor" strokeWidth="0.9" strokeOpacity="0.55" />
+      <rect x="133" y="133" width="234" height="234" stroke="currentColor" strokeWidth="0.6" strokeOpacity="0.35" />
+      <g stroke="currentColor" strokeWidth="0.5" strokeOpacity="0.3">
+        <line x1="70" y1="250" x2="430" y2="250" />
+        <line x1="250" y1="70" x2="250" y2="430" />
+      </g>
+      <g stroke="currentColor" strokeWidth="0.4" strokeOpacity="0.2">
+        <line x1="84.4" y1="84.4" x2="415.6" y2="415.6" />
+        <line x1="415.6" y1="84.4" x2="84.4" y2="415.6" />
+      </g>
+      <g stroke="currentColor" strokeWidth="0.7" strokeOpacity="0.5">
+        <circle cx="376" cy="250" r="6" />
+        <circle cx="339.1" cy="339.1" r="6" />
+        <circle cx="250" cy="376" r="6" />
+        <circle cx="160.9" cy="339.1" r="6" />
+        <circle cx="124" cy="250" r="6" />
+        <circle cx="160.9" cy="160.9" r="6" />
+        <circle cx="250" cy="124" r="6" />
+        <circle cx="339.1" cy="160.9" r="6" />
+      </g>
+      <circle cx="250" cy="250" r="12" stroke="currentColor" strokeWidth="1" strokeOpacity="0.7" />
+      <circle cx="250" cy="250" r="4" stroke="currentColor" strokeWidth="1.5" strokeOpacity="0.9" />
+      <polygon points="250,97 257,111 243,111" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.5" />
+      <polygon points="403,250 389,257 389,243" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.5" />
+      <polygon points="250,403 243,389 257,389" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.5" />
+      <polygon points="97,250 111,243 111,257" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.5" />
+    </svg>
+  );
+}
+
+function FlowerOfLife({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 500 500" fill="none" className={className}>
+      <g stroke="currentColor" strokeWidth="0.7" strokeOpacity="0.6">
+        <circle cx="250" cy="250" r="50" />
+        <circle cx="300" cy="250" r="50" />
+        <circle cx="275" cy="293.3" r="50" />
+        <circle cx="225" cy="293.3" r="50" />
+        <circle cx="200" cy="250" r="50" />
+        <circle cx="225" cy="206.7" r="50" />
+        <circle cx="275" cy="206.7" r="50" />
+        <circle cx="350" cy="250" r="50" />
+        <circle cx="300" cy="336.6" r="50" />
+        <circle cx="200" cy="336.6" r="50" />
+        <circle cx="150" cy="250" r="50" />
+        <circle cx="200" cy="163.4" r="50" />
+        <circle cx="300" cy="163.4" r="50" />
+        <circle cx="325" cy="293.3" r="50" />
+        <circle cx="250" cy="336.6" r="50" />
+        <circle cx="175" cy="293.3" r="50" />
+        <circle cx="175" cy="206.7" r="50" />
+        <circle cx="250" cy="163.4" r="50" />
+        <circle cx="325" cy="206.7" r="50" />
+      </g>
+      <circle cx="250" cy="250" r="112" stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.5" />
+      <circle cx="250" cy="250" r="120" stroke="currentColor" strokeWidth="0.4" strokeOpacity="0.3" />
+    </svg>
+  );
+}
+
+// ─── Metatron's Cube ───
+
+const MC_VERTICES: [number, number][] = [
+  [250, 250], [250, 170], [319.28, 210], [319.28, 290],
+  [250, 330], [180.72, 290], [180.72, 210], [250, 90],
+  [388.56, 170], [388.56, 330], [250, 410], [111.44, 330],
+  [111.44, 170],
+];
+
+function MetatronsCube({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 500 500" fill="none" className={className}>
+      <g stroke="currentColor" strokeWidth="0.6" strokeOpacity="0.4">
+        {MC_VERTICES.flatMap((v1, i) =>
+          MC_VERTICES.slice(i + 1).map((v2, j) => (
+            <line key={`${i}-${i + j + 1}`} x1={v1[0]} y1={v1[1]} x2={v2[0]} y2={v2[1]} />
+          ))
+        )}
+      </g>
+      <g stroke="currentColor" strokeWidth="0.8" strokeOpacity="0.7">
+        {MC_VERTICES.map(([cx, cy], i) => (
+          <circle key={i} cx={cx} cy={cy} r="40" />
+        ))}
+      </g>
+      <circle cx="250" cy="250" r="210" stroke="currentColor" strokeWidth="0.5" strokeOpacity="0.3" />
     </svg>
   );
 }
@@ -47,203 +107,224 @@ function MaterialIcon({
 
 const SERVICES = [
   {
-    title: "Custom Development",
-    icon: "code" as IconName,
+    label: "CUSTOM DEVELOPMENT",
+    title: "Bespoke software engines",
     description:
-      "Bespoke software engines engineered for performance, security, and scalability.",
-    featured: false,
+      "Engineered for performance, security, and scalability. Every line of code is a deliberate stroke of craftsmanship.",
+    Sigil: NovaSigilMark,
   },
   {
-    title: "SaaS Products",
-    icon: "cloud_done" as IconName,
+    label: "SAAS PRODUCTS",
+    title: "Architecture for the modern web",
     description:
-      "Architecture for the modern web. We build resilient SaaS ecosystems that scale with your ambition.",
-    featured: true,
+      "We build resilient SaaS ecosystems that handle millions of requests while maintaining flawless user experiences.",
+    Sigil: FlowerOfLife,
   },
   {
-    title: "Automation & Integration",
-    icon: "hub" as IconName,
+    label: "AUTOMATION & INTEGRATION",
+    title: "Connecting the disparate",
     description:
-      "Connecting the disparate. We build the invisible nervous systems that power seamless operations.",
-    featured: false,
+      "We build the invisible nervous systems that allow your digital tools to communicate and operate without friction.",
+    Sigil: MetatronsCube,
   },
-] as const;
-
-// ─── Animation Variants ───
-
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.15 },
-  },
-};
-
-const cardVariants = {
-  hidden: { y: 40, opacity: 0, filter: "blur(4px)" },
-  visible: {
-    y: 0,
-    opacity: 1,
-    filter: "blur(0px)",
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
-  },
-};
+];
 
 // ─── Component ───
 
 export function Services() {
-  const headingRef = useRef<HTMLHeadingElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const textRefs = useRef<(HTMLDivElement | null)[]>([null, null, null]);
+  const sigilRefs = useRef<(HTMLDivElement | null)[]>([null, null, null]);
+  const sigilContainerRef = useRef<HTMLDivElement>(null);
+  const counterRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    const heading = headingRef.current;
-    if (!heading) return;
+    const mm = gsap.matchMedia();
 
-    const words = heading.querySelectorAll<HTMLSpanElement>("[data-scroll-word]");
-    const triggers: ScrollTrigger[] = [];
+    mm.add("(min-width: 768px)", () => {
+      const section = sectionRef.current;
+      if (!section) return;
 
-    words.forEach((word, i) => {
+      const texts = textRefs.current;
+      const sigils = sigilRefs.current;
+      const sigilContainer = sigilContainerRef.current;
+      const counter = counterRef.current;
+
+      const B1 = 1 / 3;
+      const B2 = 2 / 3;
+      const HW = 0.08;
+
       const st = ScrollTrigger.create({
-        trigger: heading,
-        start: "top 80%",
-        end: "top 40%",
-        scrub: 0.5,
+        trigger: section,
+        start: "top top",
+        end: "bottom bottom",
         onUpdate: (self) => {
-          const wordStart = i / words.length;
-          const wordEnd = (i + 1) / words.length;
-          const t = Math.min(1, Math.max(0, (self.progress - wordStart) / (wordEnd - wordStart)));
-          word.style.opacity = String(0.4 + t * 0.6);
-          word.style.color = t > 0.5
-            ? "var(--text-primary)"
-            : "var(--text-secondary)";
+          const p = self.progress;
+
+          for (let i = 0; i < 3; i++) {
+            const text = texts[i];
+            const sigil = sigils[i];
+            if (!text || !sigil) continue;
+
+            let vis = 0;
+            let y = 0;
+
+            if (i === 0) {
+              if (p < B1 - HW) {
+                vis = 1;
+              } else if (p < B1 + HW) {
+                const t = (p - (B1 - HW)) / (2 * HW);
+                vis = 1 - t;
+                y = -40 * t;
+              }
+            } else if (i === 1) {
+              if (p < B1 - HW) {
+                y = 40;
+              } else if (p < B1 + HW) {
+                const t = (p - (B1 - HW)) / (2 * HW);
+                vis = t;
+                y = 40 * (1 - t);
+              } else if (p < B2 - HW) {
+                vis = 1;
+              } else if (p < B2 + HW) {
+                const t = (p - (B2 - HW)) / (2 * HW);
+                vis = 1 - t;
+                y = -40 * t;
+              }
+            } else {
+              if (p < B2 - HW) {
+                y = 40;
+              } else if (p < B2 + HW) {
+                const t = (p - (B2 - HW)) / (2 * HW);
+                vis = t;
+                y = 40 * (1 - t);
+              } else {
+                vis = 1;
+              }
+            }
+
+            gsap.set(text, { opacity: vis, y });
+            gsap.set(sigil, { opacity: vis * 0.15 });
+          }
+
+          // Rotate sigil container with scroll
+          if (sigilContainer) {
+            gsap.set(sigilContainer, { rotation: p * 360 });
+          }
+
+          // Update counter
+          if (counter) {
+            const active = p < B1 ? 1 : p < B2 ? 2 : 3;
+            counter.textContent = `0${active} / 03`;
+          }
         },
       });
-      triggers.push(st);
+
+      return () => st.kill();
     });
 
-    return () => {
-      triggers.forEach((st) => st.kill());
-    };
+    return () => mm.revert();
   }, []);
 
   return (
-    <section id="services" className="relative z-20 overflow-hidden bg-surface-alt px-8 py-28">
-      {/* Background sigil */}
-      <img
-        src="/sigils/flower-of-life.svg"
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 select-none opacity-[0.05]"
-      />
+    <section id="services" className="relative z-20">
+      {/* Desktop: Pinned scroll experience */}
+      <div ref={sectionRef} className="relative hidden md:block" style={{ height: "250vh" }}>
+        <div className="sticky top-0 flex h-screen items-center overflow-hidden bg-surface-alt">
+          <div className="relative mx-auto flex w-full max-w-7xl items-center gap-16 px-8">
+            {/* Corner crosshairs */}
+            <CrosshairMarker className="absolute -top-8 left-0 text-label" />
+            <CrosshairMarker className="absolute -top-8 right-0 text-label" />
 
-      <div className="relative mx-auto max-w-7xl">
-        {/* Corner crosshairs */}
-        <CrosshairMarker className="absolute -top-8 left-0 text-label" />
-        <CrosshairMarker className="absolute -top-8 right-0 text-label" />
-
-        {/* Header */}
-        <div className="mb-16 flex flex-col justify-between gap-8 md:flex-row md:items-end">
-          <div className="relative">
-            <SectionNumber number="01" />
-            {/* Heading crosshairs */}
-            <CrosshairMarker className="absolute -left-8 top-3 text-label" />
-            <h2
-              ref={headingRef}
-              className="font-headline text-4xl font-bold md:text-5xl"
-            >
-              <span className="sr-only">Core Expertise</span>
-              {["Core", "Expertise"].map((word) => (
-                <span
-                  key={word}
-                  data-scroll-word
-                  aria-hidden="true"
-                  className="mr-[0.3em] inline-block transition-colors duration-200"
-                  style={{ opacity: 0.4, color: "var(--text-secondary)" }}
+            {/* LEFT: Service content (60%) */}
+            <div className="grid w-[60%]">
+              {SERVICES.map((service, i) => (
+                <div
+                  key={service.label}
+                  ref={(el) => {
+                    textRefs.current[i] = el;
+                  }}
+                  className="col-start-1 row-start-1 flex flex-col justify-center"
+                  style={{
+                    opacity: i === 0 ? 1 : 0,
+                    transform: i === 0 ? "none" : "translateY(40px)",
+                  }}
                 >
-                  {word}
-                </span>
-              ))}
-            </h2>
-            <div className="mt-4 h-1 w-24 bg-heading" />
-            <CrosshairMarker className="absolute -right-8 top-3 text-label" />
-          </div>
-          <p className="max-w-md text-lg italic text-body">
-            Our services are forged at the intersection of technical mastery and
-            artistic vision.
-          </p>
-        </div>
-
-        {/* Bento Grid */}
-        <motion.div
-          className="grid gap-6 md:grid-cols-3"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-        >
-          {SERVICES.map((service) => (
-            <motion.div
-              key={service.title}
-              variants={cardVariants}
-              onMouseMove={(e) => {
-                const rect = e.currentTarget.getBoundingClientRect();
-                e.currentTarget.style.setProperty("--mouse-x", `${e.clientX - rect.left}px`);
-                e.currentTarget.style.setProperty("--mouse-y", `${e.clientY - rect.top}px`);
-              }}
-              className={`group relative flex min-h-[400px] flex-col justify-between overflow-hidden border-t p-10 transition-all duration-300 hover:-translate-y-1 ${
-                service.featured
-                  ? "glow-white border-t-divider-hover bg-surface-card hover:border-t-label hover:bg-surface-elevated"
-                  : "border-divider bg-surface-alt hover:border-t-divider-hover hover:bg-surface-card"
-              }`}
-            >
-              {/* Cursor spotlight glow */}
-              <div
-                className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                style={{
-                  background: "radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.03), transparent 70%)",
-                }}
-              />
-
-              {/* Featured badge */}
-              {service.featured && (
-                <div className="absolute right-6 top-6 rounded-sm bg-surface-elevated px-3 py-1 text-xs font-semibold uppercase tracking-widest text-label">
-                  Featured
+                  <span className="font-mono text-xs uppercase tracking-widest text-label">
+                    {service.label}
+                  </span>
+                  <h3 className="mt-4 font-headline text-5xl font-bold leading-tight text-heading">
+                    {service.title}
+                  </h3>
+                  <p className="mt-6 max-w-lg text-lg leading-relaxed text-body">
+                    {service.description}
+                  </p>
+                  <a
+                    href="#contact"
+                    className="group/link mt-8 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-body transition-colors duration-300 hover:text-heading"
+                  >
+                    Learn more
+                    <span className="transition-transform duration-300 group-hover/link:translate-x-1">
+                      &rarr;
+                    </span>
+                  </a>
                 </div>
-              )}
+              ))}
+            </div>
 
-              {/* Top content */}
-              <div>
-                <MaterialIcon
-                  name={service.icon}
-                  size={48}
-                  className="text-body opacity-40 transition-opacity duration-300 group-hover:opacity-100"
-                />
-                <h3 className="mt-6 font-headline text-2xl font-bold text-heading">
-                  {service.title}
-                </h3>
-                <p className="mt-4 leading-relaxed text-body">
-                  {service.description}
-                </p>
-              </div>
-
-              {/* Bottom link */}
-              <a
-                href="#contact"
-                className="mt-8 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-body transition-colors duration-300 hover:text-heading"
+            {/* RIGHT: Sigil visual (40%) */}
+            <div className="flex w-[40%] items-center justify-center">
+              <div
+                ref={sigilContainerRef}
+                className="grid h-[500px] w-[500px]"
+                style={{ willChange: "transform" }}
               >
-                Explore Service
-                <span className="transition-transform duration-300 group-hover:translate-x-1">
-                  &rarr;
-                </span>
-              </a>
+                {SERVICES.map((service, i) => (
+                  <div
+                    key={service.label}
+                    ref={(el) => {
+                      sigilRefs.current[i] = el;
+                    }}
+                    className="col-start-1 row-start-1"
+                    style={{ opacity: i === 0 ? 0.15 : 0 }}
+                  >
+                    <service.Sigil className="h-full w-full text-white" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
 
-              {/* Large decorative icon */}
-              <MaterialIcon
-                name={service.icon}
-                size={200}
-                className="pointer-events-none absolute -bottom-6 -right-6 text-muted opacity-[0.15] transition-opacity duration-500 group-hover:opacity-[0.25]"
-              />
-            </motion.div>
-          ))}
-        </motion.div>
+          {/* Progress counter */}
+          <div className="absolute bottom-8 right-12">
+            <span ref={counterRef} className="font-mono text-sm text-label">
+              01 / 03
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile: Stacked layout */}
+      <div className="block space-y-16 bg-surface-alt px-8 py-28 md:hidden">
+        {SERVICES.map((service) => (
+          <div key={service.label}>
+            <span className="font-mono text-xs uppercase tracking-widest text-label">
+              {service.label}
+            </span>
+            <h3 className="mt-3 font-headline text-3xl font-bold leading-tight text-heading">
+              {service.title}
+            </h3>
+            <p className="mt-4 text-base leading-relaxed text-body">
+              {service.description}
+            </p>
+            <a
+              href="#contact"
+              className="mt-6 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-body transition-colors duration-300 hover:text-heading"
+            >
+              Learn more <span>&rarr;</span>
+            </a>
+          </div>
+        ))}
       </div>
     </section>
   );
