@@ -61,7 +61,7 @@ export function Navbar() {
           }}
           className="text-2xl font-headline font-bold text-heading"
         >
-          Nova Sigil
+          Nova <span className="gold-gradient-text">Sigil</span>
         </a>
 
         {/* Desktop nav links */}

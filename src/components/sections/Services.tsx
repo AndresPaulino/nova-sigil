@@ -318,7 +318,7 @@ export function Services() {
                   <span className="font-mono text-xs uppercase tracking-widest text-label">
                     {service.label}
                   </span>
-                  <h3 className="mt-4 font-headline text-5xl font-bold leading-tight text-heading">
+                  <h3 className="mt-4 font-headline text-5xl font-bold leading-tight gold-gradient-text">
                     {service.title}
                   </h3>
                   <p className="mt-6 max-w-lg text-lg leading-relaxed text-body">
@@ -376,7 +376,7 @@ export function Services() {
             <span className="font-mono text-xs uppercase tracking-widest text-label">
               {service.label}
             </span>
-            <h3 className="mt-3 font-headline text-3xl font-bold leading-tight text-heading">
+            <h3 className="mt-3 font-headline text-3xl font-bold leading-tight gold-gradient-text">
               {service.title}
             </h3>
             <p className="mt-4 text-base leading-relaxed text-body">

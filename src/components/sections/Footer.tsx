@@ -67,7 +67,7 @@ export function Footer() {
           {/* LEFT — Branding */}
           <div className="max-w-xs">
             <span className="font-headline text-xl font-bold text-heading">
-              Nova Sigil
+              Nova <span className="gold-gradient-text">Sigil</span>
             </span>
             <p className="mt-4 text-sm leading-relaxed text-body opacity-80">
               Architecting high-performance digital infrastructure for the next
