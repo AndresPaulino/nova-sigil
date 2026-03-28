@@ -101,12 +101,12 @@ export function Contact() {
           {/* Heading crosshairs */}
           <CrosshairMarker className="absolute -left-8 top-3 text-label" />
           <h2 className="font-headline text-4xl font-bold leading-tight text-heading md:text-5xl">
-            <TextReveal>Initiate the Transmutation.</TextReveal>
+            <TextReveal>Let&apos;s Talk About Your Project.</TextReveal>
           </h2>
           <CrosshairMarker className="absolute -right-8 top-3 text-label" />
           <p className="mt-6 text-lg leading-relaxed text-body">
-            Ready to bring your vision into the physical realm? Reach out to our
-            leads.
+            Tell us what you&apos;re building. We&apos;ll follow up within 24
+            hours to discuss scope, timeline, and fit.
           </p>
 
           <div className="mt-12">
@@ -174,7 +174,7 @@ export function Contact() {
               {/* Textarea */}
               <motion.div variants={fieldVariants}>
                 <label htmlFor="contact-message" className="mb-2 block text-xs font-bold uppercase tracking-widest text-label">
-                  Your Vision
+                  Tell us about your project
                 </label>
                 <textarea
                   id="contact-message"

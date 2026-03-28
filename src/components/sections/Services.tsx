@@ -109,23 +109,23 @@ function MetatronsCube({ className }: { className?: string }) {
 const SERVICES = [
   {
     label: "CUSTOM DEVELOPMENT",
-    title: "Bespoke software engines",
+    title: "Custom Platforms & Internal Tools",
     description:
-      "Engineered for performance, security, and scalability. Every line of code is a deliberate stroke of craftsmanship.",
+      "Full-stack applications built for your specific business logic. We architect systems that handle real-world complexity — from multi-tenant SaaS platforms to internal tools that replace manual workflows.",
     Sigil: NovaSigilMark,
   },
   {
-    label: "SAAS PRODUCTS",
-    title: "Architecture for the modern web",
+    label: "API & SYSTEM INTEGRATION",
+    title: "Connecting Your Core Systems",
     description:
-      "We build resilient SaaS ecosystems that handle millions of requests while maintaining flawless user experiences.",
+      "REST and SOAP API integrations, third-party platform connectors, and orchestration layers that make your existing systems work together. We've integrated core banking APIs, CRMs, document platforms, and more.",
     Sigil: FlowerOfLife,
   },
   {
-    label: "AUTOMATION & INTEGRATION",
-    title: "Connecting the disparate",
+    label: "AUTOMATION & WORKFLOWS",
+    title: "Eliminating Manual Processes",
     description:
-      "We build the invisible nervous systems that allow your digital tools to communicate and operate without friction.",
+      "Document generation pipelines, onboarding automation, scheduled jobs, and event-driven workflows. If your team is doing it manually and repeatedly, we build the system that handles it.",
     Sigil: MetatronsCube,
   },
 ];

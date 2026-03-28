@@ -7,9 +7,9 @@ interface HeroStatsProps {
 }
 
 const stats = [
-  { value: "50+", label: "Projects Delivered" },
-  { value: "12+", label: "Years Experience" },
-  { value: "99.9%", label: "Uptime SLA" },
+  { value: "Enterprise-Grade", label: "Systems" },
+  { value: "12+ Years", label: "Financial Services & Engineering" },
+  { value: "Production-Hardened", label: "Architecture" },
 ];
 
 const containerVariants = {

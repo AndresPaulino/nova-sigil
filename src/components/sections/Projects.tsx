@@ -99,26 +99,26 @@ interface Project {
 
 const PROJECTS: Project[] = [
   {
-    title: "Vanguard OS",
-    category: "Enterprise / ERP",
+    title: "Onboarding & Account Automation",
+    category: "Financial Services",
     description:
-      "A modular operating system for enterprise resource planning. Built for scale, designed for clarity.",
+      "End-to-end digital onboarding systems that integrate with core banking platforms, KYC document generation, and automated account opening workflows.",
     featured: false,
     visual: (className) => <SquareNest className={className} />,
   },
   {
-    title: "Aetherium SaaS",
-    category: "Fintech / Analytics",
+    title: "Microservices & API Orchestration",
+    category: "Platform Engineering",
     description:
-      "Real-time financial analytics platform processing millions of transactions with sub-second latency.",
+      "Event-driven architectures with Kafka, Spring Boot, and FastAPI. We build the orchestration layers that route requests across your internal and external APIs.",
     featured: true,
     visual: (className) => <DiamondCircle className={className} />,
   },
   {
-    title: "Lumina Automate",
-    category: "IoT / Integration",
+    title: "Workflow & Document Automation",
+    category: "Automation",
     description:
-      "Autonomous integration fabric connecting thousands of IoT endpoints into a unified control plane.",
+      "Automated document pipelines, PDF generation services, e-signature integrations, and scheduled data processing. Replace repetitive manual work with reliable systems.",
     featured: false,
     visual: (className) => <InfinityLoop className={className} />,
   },
@@ -129,12 +129,10 @@ const PROJECTS: Project[] = [
 export function Projects() {
   const pinRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
-  const hintRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const pin = pinRef.current;
     const track = trackRef.current;
-    const hint = hintRef.current;
     if (!pin || !track) return;
 
     const mm = gsap.matchMedia();
@@ -158,14 +156,6 @@ export function Projects() {
           pin: true,
           scrub: 1,
           invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            // Fade out scroll hint
-            if (hint) {
-              gsap.set(hint, {
-                opacity: Math.max(0, 1 - self.progress * 5),
-              });
-            }
-          },
         },
       });
 
@@ -234,10 +224,10 @@ export function Projects() {
         <SectionNumber number="02" />
         <CrosshairMarker className="absolute -left-8 top-8 text-label" />
         <span className="font-mono text-xs uppercase tracking-widest text-label">
-          Portfolio
+          Capabilities
         </span>
         <h2 className="mt-4 font-headline text-5xl font-bold text-heading md:text-6xl">
-          <TextReveal>Selected Case Studies</TextReveal>
+          <TextReveal>What We Build</TextReveal>
         </h2>
         <CrosshairMarker className="absolute -right-8 top-8 text-label" />
       </div>
@@ -296,7 +286,7 @@ export function Projects() {
                   href="#contact"
                   className="mt-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-body transition-colors duration-300 hover:text-accent"
                 >
-                  View Case Study
+                  Discuss Your Project
                   <span className="transition-transform duration-300 group-hover:translate-x-1">
                     &rarr;
                   </span>
@@ -306,16 +296,6 @@ export function Projects() {
           ))}
         </div>
 
-        {/* Scroll hint */}
-        <div
-          ref={hintRef}
-          className="absolute right-8 top-1/2 flex -translate-y-1/2 items-center gap-3"
-        >
-          <span className="font-mono text-xs uppercase tracking-widest text-label">
-            Scroll to explore
-          </span>
-          <span className="text-label">&rarr;</span>
-        </div>
       </div>
 
       {/* Mobile: Stacked cards */}

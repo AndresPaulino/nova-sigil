@@ -70,11 +70,10 @@ export function Footer() {
               Nova <span className="gold-gradient-text">Sigil</span>
             </span>
             <p className="mt-4 text-sm leading-relaxed text-body opacity-80">
-              Architecting high-performance digital infrastructure for the next
-              generation of industry leaders.
+              Custom software engineering for businesses that need it done right.
             </p>
             <p className="mt-4 text-sm text-label">
-              &copy; 2026 Nova Sigil LLC
+              &copy; 2026 Nova Sigil LLC. All rights reserved.
             </p>
           </div>
 

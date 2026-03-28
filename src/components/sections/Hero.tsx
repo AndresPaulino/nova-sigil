@@ -29,7 +29,7 @@ export function Hero() {
             <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
           </span>
           <span className="text-xs font-body font-medium uppercase tracking-widest text-label">
-            Architecting the Future
+            Software Engineering Studio
           </span>
         </div>
 
@@ -44,8 +44,9 @@ export function Hero() {
         <div className="mt-8 flex max-w-xl items-start gap-6">
           <div className="h-16 w-px shrink-0 bg-accent/30" />
           <p className="text-xl font-body font-light text-body">
-            Crafting digital sigils of power. We transmute complex challenges into
-            elegant software solutions.
+            We design and build custom software for businesses that can&apos;t afford
+            to get it wrong. API integrations, platform engineering, and
+            automation — built by engineers with enterprise-scale experience.
           </p>
         </div>
 
@@ -56,7 +57,7 @@ export function Hero() {
               href="#contact"
               className="inline-block rounded-md bg-accent px-10 py-5 text-base font-bold text-black transition-all duration-300 hover:shadow-[0_0_20px_rgba(200,168,78,0.3)]"
             >
-              Start Your Project
+              Start a Conversation
             </a>
           </MagneticButton>
         </div>

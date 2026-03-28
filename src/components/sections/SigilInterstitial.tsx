@@ -51,9 +51,9 @@ const COLOR_GOLD: [number, number, number] = [200, 168, 78];
 // ─── Words ───
 
 const WORDS = [
-  { text: "Precision.", threshold: 0.20, gold: false },
-  { text: "Craftsmanship.", threshold: 0.45, gold: false },
-  { text: "Code.", threshold: 0.70, gold: true },
+  { text: "Ship faster.", threshold: 0.20, gold: false },
+  { text: "Scale confidently.", threshold: 0.45, gold: false },
+  { text: "Sleep at night.", threshold: 0.70, gold: true },
 ];
 
 // ─── Component ───

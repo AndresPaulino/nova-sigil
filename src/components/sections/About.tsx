@@ -66,15 +66,15 @@ function SeedOfLife({ className }: { className?: string }) {
 const FEATURES = [
   {
     icon: "architecture" as const,
-    title: "Immutable Quality",
+    title: "Domain Expertise",
     description:
-      "We refuse to ship compromises. Performance and security are integrated into our core DNA.",
+      "Deep experience in financial services, regulatory environments, and complex business logic. We speak your language.",
   },
   {
     icon: "auto_graph" as const,
-    title: "Future-Proofed Logic",
+    title: "Production-Grade Standards",
     description:
-      "Built to evolve. Our architectures are designed to grow with your ambition, not hinder it.",
+      "Observability, error handling, CI/CD, and documentation are built in from day one — not bolted on after launch.",
   },
 ];
 
@@ -167,7 +167,7 @@ export function About() {
               12+
             </span>
             <span className="font-mono text-xs uppercase tracking-widest text-label">
-              Years Experience
+              Years in Finance &amp; Engineering
             </span>
           </div>
         </div>
@@ -185,13 +185,17 @@ export function About() {
             The Philosophy
           </span>
           <h2 className="mt-4 font-headline text-4xl font-bold leading-tight text-heading md:text-5xl">
-            <TextReveal>Craftsmanship and Precision.</TextReveal>
+            <TextReveal>Built by Engineers, Not Just Developers.</TextReveal>
           </h2>
           <CrosshairMarker className="absolute -right-8 top-8 text-label" />
           <p className="mt-6 text-lg leading-relaxed text-body">
-            At Nova Sigil, we believe software is not just a tool, but an
-            expression of logic and intent. We approach every codebase with the
-            same reverence a master smith gives to an heirloom blade.
+            Nova Sigil was founded by a tech lead with over a decade of
+            experience spanning financial services and software engineering.
+            We&apos;ve built and shipped systems at major financial
+            institutions — onboarding platforms, API integrations, microservice
+            architectures. We bring that same production-grade discipline to
+            every client engagement, whether you&apos;re a startup or an
+            enterprise.
           </p>
 
           {/* Feature bullets */}
