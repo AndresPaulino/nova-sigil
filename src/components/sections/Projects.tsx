@@ -99,26 +99,26 @@ interface Project {
 
 const PROJECTS: Project[] = [
   {
-    title: "Onboarding & Account Automation",
-    category: "Financial Services",
+    title: "DocuSign Orchestration for Complex Entity Structures",
+    category: "Financial Services / Document Automation",
     description:
-      "End-to-end digital onboarding systems that integrate with core banking platforms, KYC document generation, and automated account opening workflows.",
+      "Built a custom API (Python/Flask) that automates document assembly, signer routing, and tab placement for complex legal entity onboarding. Handles LLCs, trusts, and multi-signer corporate accounts. Replaced a 30+ minute manual process with instant automated generation.",
     featured: false,
     visual: (className) => <SquareNest className={className} />,
   },
   {
-    title: "Microservices & API Orchestration",
-    category: "Platform Engineering",
+    title: "Digital Onboarding Modernization",
+    category: "Financial Services / Platform Engineering",
     description:
-      "Event-driven architectures with Kafka, Spring Boot, and FastAPI. We build the orchestration layers that route requests across your internal and external APIs.",
+      "Automated PDF generation from KYC data, pre-populated external platform account forms (Pershing), and redesigned multi-step advisor workflows. Dozens of targeted improvements that compounded into a fundamentally faster onboarding process.",
     featured: true,
     visual: (className) => <DiamondCircle className={className} />,
   },
   {
-    title: "Workflow & Document Automation",
-    category: "Automation",
+    title: "Multi-Location Data Extraction Tool",
+    category: "Automation / Data Engineering",
     description:
-      "Automated document pipelines, PDF generation services, e-signature integrations, and scheduled data processing. Replace repetitive manual work with reliable systems.",
+      "Python/Playwright automation that logs into 600+ accounts on a third-party platform, extracts operational data, and compiles structured Excel reports. Runs overnight on a schedule. Delivered as a standalone desktop app with GUI, progress tracking, and email notifications.",
     featured: false,
     visual: (className) => <InfinityLoop className={className} />,
   },
@@ -227,7 +227,7 @@ export function Projects() {
           Capabilities
         </span>
         <h2 className="mt-4 font-headline text-5xl font-bold text-heading md:text-6xl">
-          <TextReveal>What We Build</TextReveal>
+          <TextReveal>Selected Projects</TextReveal>
         </h2>
         <CrosshairMarker className="absolute -right-8 top-8 text-label" />
       </div>
