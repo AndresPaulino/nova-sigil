@@ -94,6 +94,7 @@ interface Project {
   category: string;
   description: string;
   featured: boolean;
+  href: string;
   visual: (className?: string) => ReactNode;
 }
 
@@ -104,6 +105,7 @@ const PROJECTS: Project[] = [
     description:
       "Built a custom API (Python/Flask) that automates document assembly, signer routing, and tab placement for complex legal entity onboarding. Handles LLCs, trusts, and multi-signer corporate accounts. Replaced a 30+ minute manual process with instant automated generation.",
     featured: false,
+    href: "/projects/docusign-orchestration",
     visual: (className) => <SquareNest className={className} />,
   },
   {
@@ -112,6 +114,7 @@ const PROJECTS: Project[] = [
     description:
       "Automated PDF generation from KYC data, pre-populated external platform account forms (Pershing), and redesigned multi-step advisor workflows. Dozens of targeted improvements that compounded into a fundamentally faster onboarding process.",
     featured: true,
+    href: "/projects/onboarding-modernization",
     visual: (className) => <DiamondCircle className={className} />,
   },
   {
@@ -120,6 +123,7 @@ const PROJECTS: Project[] = [
     description:
       "Python/Playwright automation that logs into 600+ accounts on a third-party platform, extracts operational data, and compiles structured Excel reports. Runs overnight on a schedule. Delivered as a standalone desktop app with GUI, progress tracking, and email notifications.",
     featured: false,
+    href: "/projects/automated-data-extraction",
     visual: (className) => <InfinityLoop className={className} />,
   },
 ];
@@ -283,7 +287,7 @@ export function Projects() {
                   {project.description}
                 </p>
                 <a
-                  href="#contact"
+                  href={project.href}
                   className="mt-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-body transition-colors duration-300 hover:text-accent"
                 >
                   Discuss Your Project
@@ -323,10 +327,10 @@ export function Projects() {
                 {project.description}
               </p>
               <a
-                href="#contact"
+                href={project.href}
                 className="mt-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-body transition-colors duration-300 hover:text-accent"
               >
-                View Case Study <span>&rarr;</span>
+                Discuss Your Project <span>&rarr;</span>
               </a>
             </div>
           </article>
