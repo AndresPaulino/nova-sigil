@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { ReactNode } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextReveal } from "@/components/ui/TextReveal";
@@ -12,81 +11,6 @@ import { lenisState } from "@/lib/SmoothScroll";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ─── Inline Geometric SVGs ───
-
-function SquareNest({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 400 400"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-    >
-      <rect x="40" y="40" width="320" height="320" stroke="currentColor" strokeWidth="1" />
-      <rect x="80" y="80" width="240" height="240" stroke="currentColor" strokeWidth="1" />
-      <rect x="120" y="120" width="160" height="160" stroke="currentColor" strokeWidth="1" />
-      <rect x="160" y="160" width="80" height="80" stroke="currentColor" strokeWidth="1" />
-      <line x1="40" y1="40" x2="160" y2="160" stroke="currentColor" strokeWidth="0.5" />
-      <line x1="360" y1="40" x2="240" y2="160" stroke="currentColor" strokeWidth="0.5" />
-      <line x1="40" y1="360" x2="160" y2="240" stroke="currentColor" strokeWidth="0.5" />
-      <line x1="360" y1="360" x2="240" y2="240" stroke="currentColor" strokeWidth="0.5" />
-    </svg>
-  );
-}
-
-function DiamondCircle({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 400 400"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-    >
-      <circle cx="200" cy="200" r="150" stroke="currentColor" strokeWidth="1" />
-      <circle cx="200" cy="200" r="100" stroke="currentColor" strokeWidth="0.5" />
-      <polygon
-        points="200,50 350,200 200,350 50,200"
-        stroke="currentColor"
-        strokeWidth="1"
-        fill="none"
-      />
-      <polygon
-        points="200,100 300,200 200,300 100,200"
-        stroke="currentColor"
-        strokeWidth="0.5"
-        fill="none"
-      />
-      <line x1="200" y1="40" x2="200" y2="360" stroke="currentColor" strokeWidth="0.3" />
-      <line x1="40" y1="200" x2="360" y2="200" stroke="currentColor" strokeWidth="0.3" />
-    </svg>
-  );
-}
-
-function InfinityLoop({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 400 400"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-    >
-      <path
-        d="M200 200 C200 140, 300 100, 340 160 C380 220, 280 280, 200 200 C200 200, 120 120, 60 160 C20 220, 100 280, 200 200Z"
-        stroke="currentColor"
-        strokeWidth="1"
-      />
-      <path
-        d="M200 200 C200 160, 280 120, 320 170 C360 220, 260 260, 200 200 C200 200, 140 140, 80 170 C40 220, 120 260, 200 200Z"
-        stroke="currentColor"
-        strokeWidth="0.5"
-      />
-      <circle cx="130" cy="200" r="60" stroke="currentColor" strokeWidth="0.5" />
-      <circle cx="270" cy="200" r="60" stroke="currentColor" strokeWidth="0.5" />
-      <circle cx="200" cy="200" r="4" stroke="currentColor" strokeWidth="1" />
-    </svg>
-  );
-}
-
 // ─── Data ───
 
 interface Project {
@@ -95,7 +19,7 @@ interface Project {
   description: string;
   featured: boolean;
   href: string;
-  visual: (className?: string) => ReactNode;
+  image: string;
 }
 
 const PROJECTS: Project[] = [
@@ -106,7 +30,7 @@ const PROJECTS: Project[] = [
       "Built a custom API (Python/Flask) that automates document assembly, signer routing, and tab placement for complex legal entity onboarding. Handles LLCs, trusts, and multi-signer corporate accounts. Replaced a 30+ minute manual process with instant automated generation.",
     featured: false,
     href: "/projects/docusign-orchestration",
-    visual: (className) => <SquareNest className={className} />,
+    image: "/case_studies/docusign.png",
   },
   {
     title: "Digital Onboarding Modernization",
@@ -115,7 +39,7 @@ const PROJECTS: Project[] = [
       "Automated PDF generation from KYC data, pre-populated external platform account forms (Pershing), and redesigned multi-step advisor workflows. Dozens of targeted improvements that compounded into a fundamentally faster onboarding process.",
     featured: true,
     href: "/projects/onboarding-modernization",
-    visual: (className) => <DiamondCircle className={className} />,
+    image: "/case_studies/forms_automation.png",
   },
   {
     title: "Multi-Location Data Extraction Tool",
@@ -124,7 +48,7 @@ const PROJECTS: Project[] = [
       "Python/Playwright automation that logs into 600+ accounts on a third-party platform, extracts operational data, and compiles structured Excel reports. Runs overnight on a schedule. Delivered as a standalone desktop app with GUI, progress tracking, and email notifications.",
     featured: false,
     href: "/projects/automated-data-extraction",
-    visual: (className) => <InfinityLoop className={className} />,
+    image: "/case_studies/parking_automation.png",
   },
 ];
 
@@ -143,9 +67,6 @@ export function Projects() {
 
     mm.add("(min-width: 769px)", () => {
       const cards = track.querySelectorAll<HTMLElement>("[data-project-card]");
-      const visuals = track.querySelectorAll<HTMLElement>(
-        "[data-project-visual]",
-      );
 
       const totalWidth = track.scrollWidth;
       const vw = window.innerWidth;
@@ -164,20 +85,6 @@ export function Projects() {
       });
 
       tl.to(track, { x: -scrollDistance, ease: "none" });
-
-      // Parallax on visuals at 0.5x rate
-      visuals.forEach((visual) => {
-        gsap.to(visual, {
-          x: scrollDistance * 0.5,
-          ease: "none",
-          scrollTrigger: {
-            trigger: pin,
-            start: "top top",
-            end: `+=${scrollDistance * 1.5}`,
-            scrub: 1,
-          },
-        });
-      });
 
       // Velocity-based skew on cards
       const skewSetters = Array.from(cards).map((card) =>
@@ -258,14 +165,15 @@ export function Projects() {
                     project.featured ? "glow-white" : ""
                   }`}
                 >
-                  {/* Abstract geometric visual */}
+                  {/* Screenshot visual */}
                   <div
-                    data-project-visual
-                    className="absolute inset-0 flex items-center justify-center p-12"
+                    className="absolute inset-0"
                   >
-                    {project.visual(
-                      "h-full w-full text-white/10 transition-all duration-500 group-hover:text-white/20",
-                    )}
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="h-full w-full object-cover object-top opacity-60 transition-opacity duration-500 group-hover:opacity-80"
+                    />
                   </div>
 
                   {/* Bottom gradient overlay */}
@@ -310,10 +218,12 @@ export function Projects() {
           <article key={project.title} className="group">
             <a href={project.href} className="block">
               <SpotlightCard className="relative aspect-[4/5] overflow-hidden rounded-lg border border-divider bg-surface-card transition-all duration-300 group-hover:border-divider-hover">
-                <div className="absolute inset-0 flex items-center justify-center p-12">
-                  {project.visual(
-                    "h-full w-full text-white/10 transition-all duration-500 group-hover:text-white/20",
-                  )}
+                <div className="absolute inset-0">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="h-full w-full object-cover object-top opacity-60 transition-opacity duration-500 group-hover:opacity-80"
+                  />
                 </div>
                 <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-surface-card/90 to-transparent" />
                 <div className="absolute bottom-0 left-0 p-6">
