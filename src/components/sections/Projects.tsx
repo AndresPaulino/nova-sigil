@@ -252,34 +252,36 @@ export function Projects() {
               data-project-card
               className="w-[70vw] shrink-0 group"
             >
-              <SpotlightCard
-                className={`relative aspect-[16/9] overflow-hidden rounded-lg border border-divider bg-surface-card transition-all duration-300 group-hover:border-divider-hover ${
-                  project.featured ? "glow-white" : ""
-                }`}
-              >
-                {/* Abstract geometric visual */}
-                <div
-                  data-project-visual
-                  className="absolute inset-0 flex items-center justify-center p-12"
+              <a href={project.href} className="block">
+                <SpotlightCard
+                  className={`relative aspect-[16/9] overflow-hidden rounded-lg border border-divider bg-surface-card transition-all duration-300 group-hover:border-divider-hover ${
+                    project.featured ? "glow-white" : ""
+                  }`}
                 >
-                  {project.visual(
-                    "h-full w-full text-white/10 transition-all duration-500 group-hover:text-white/20",
-                  )}
-                </div>
+                  {/* Abstract geometric visual */}
+                  <div
+                    data-project-visual
+                    className="absolute inset-0 flex items-center justify-center p-12"
+                  >
+                    {project.visual(
+                      "h-full w-full text-white/10 transition-all duration-500 group-hover:text-white/20",
+                    )}
+                  </div>
 
-                {/* Bottom gradient overlay */}
-                <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-surface-card/90 to-transparent" />
+                  {/* Bottom gradient overlay */}
+                  <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-surface-card/90 to-transparent" />
 
-                {/* Category + title */}
-                <div className="absolute bottom-0 left-0 p-8">
-                  <span className="font-mono text-xs uppercase tracking-widest text-label">
-                    {project.category}
-                  </span>
-                  <h3 className="mt-2 font-headline text-3xl font-bold text-heading">
-                    {project.title}
-                  </h3>
-                </div>
-              </SpotlightCard>
+                  {/* Category + title */}
+                  <div className="absolute bottom-0 left-0 p-8">
+                    <span className="font-mono text-xs uppercase tracking-widest text-label">
+                      {project.category}
+                    </span>
+                    <h3 className="mt-2 font-headline text-3xl font-bold text-heading">
+                      {project.title}
+                    </h3>
+                  </div>
+                </SpotlightCard>
+              </a>
 
               {/* Description */}
               <div className="mt-6">
@@ -306,22 +308,24 @@ export function Projects() {
       <div className="grid gap-8 px-8 pb-28 md:hidden">
         {PROJECTS.map((project) => (
           <article key={project.title} className="group">
-            <SpotlightCard className="relative aspect-[4/5] overflow-hidden rounded-lg border border-divider bg-surface-card transition-all duration-300 group-hover:border-divider-hover">
-              <div className="absolute inset-0 flex items-center justify-center p-12">
-                {project.visual(
-                  "h-full w-full text-white/10 transition-all duration-500 group-hover:text-white/20",
-                )}
-              </div>
-              <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-surface-card/90 to-transparent" />
-              <div className="absolute bottom-0 left-0 p-6">
-                <span className="font-mono text-xs uppercase tracking-widest text-label">
-                  {project.category}
-                </span>
-                <h3 className="mt-1 font-headline text-2xl font-bold text-heading">
-                  {project.title}
-                </h3>
-              </div>
-            </SpotlightCard>
+            <a href={project.href} className="block">
+              <SpotlightCard className="relative aspect-[4/5] overflow-hidden rounded-lg border border-divider bg-surface-card transition-all duration-300 group-hover:border-divider-hover">
+                <div className="absolute inset-0 flex items-center justify-center p-12">
+                  {project.visual(
+                    "h-full w-full text-white/10 transition-all duration-500 group-hover:text-white/20",
+                  )}
+                </div>
+                <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-surface-card/90 to-transparent" />
+                <div className="absolute bottom-0 left-0 p-6">
+                  <span className="font-mono text-xs uppercase tracking-widest text-label">
+                    {project.category}
+                  </span>
+                  <h3 className="mt-1 font-headline text-2xl font-bold text-heading">
+                    {project.title}
+                  </h3>
+                </div>
+              </SpotlightCard>
+            </a>
             <div className="mt-4">
               <p className="leading-relaxed text-body">
                 {project.description}

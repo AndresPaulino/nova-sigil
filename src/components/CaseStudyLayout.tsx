@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Footer } from "@/components/sections/Footer";
-import { MagneticButton } from "@/components/ui/MagneticButton";
+import { InlineContactForm } from "@/components/ui/InlineContactForm";
 
 // ─── Types ───
 
@@ -49,7 +49,7 @@ export function CaseStudyLayout({
     <>
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 px-4 py-4">
-        <div className="mx-auto flex max-w-7xl items-center justify-between rounded-full border border-transparent bg-surface/80 px-6 py-3 backdrop-blur-md">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
           <a
             href="/"
             className="font-headline text-2xl font-bold text-heading"
@@ -67,7 +67,7 @@ export function CaseStudyLayout({
 
       <main id="main">
         {/* Hero */}
-        <section className="relative z-20 bg-surface px-8 pt-32 pb-20">
+        <section className="relative z-20 px-8 pt-32 pb-20 md:bg-transparent bg-surface">
           <div className="mx-auto max-w-3xl">
             <motion.span
               className="block font-mono text-xs uppercase tracking-widest text-accent"
@@ -108,14 +108,14 @@ export function CaseStudyLayout({
         </section>
 
         {/* Divider */}
-        <div className="relative z-20 bg-surface">
+        <div className="relative z-20 md:bg-transparent bg-surface">
           <div className="mx-auto max-w-3xl px-8">
             <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
           </div>
         </div>
 
         {/* Content Body */}
-        <section className="relative z-20 bg-surface px-8 py-20">
+        <section className="relative z-20 px-8 py-20 md:bg-transparent bg-surface">
           <motion.div
             className="mx-auto max-w-3xl"
             variants={staggerContainer}
@@ -177,38 +177,14 @@ export function CaseStudyLayout({
           </motion.div>
         </section>
 
-        {/* CTA */}
-        <section className="relative z-20 bg-surface px-8 pb-20">
+        {/* CTA / Inline Contact Form */}
+        <section className="relative z-20 px-8 pb-20 md:bg-transparent bg-surface">
           <div className="mx-auto max-w-3xl">
             <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
           </div>
-          <motion.div
-            className="mx-auto max-w-3xl pt-20 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{
-              duration: 0.6,
-              ease: [0.16, 1, 0.3, 1] as const,
-            }}
-          >
-            <h2 className="font-headline text-3xl font-bold text-heading md:text-4xl">
-              Have a similar challenge?
-            </h2>
-            <p className="mt-4 text-lg text-body">
-              Let&apos;s talk about how we can solve it.
-            </p>
-            <div className="mt-8">
-              <MagneticButton>
-                <a
-                  href="/#contact"
-                  className="inline-block rounded-md bg-accent px-10 py-5 text-base font-bold text-black transition-all duration-300 hover:bg-accent-hover hover:shadow-[0_0_20px_rgba(200,168,78,0.3)]"
-                >
-                  Start a Conversation
-                </a>
-              </MagneticButton>
-            </div>
-          </motion.div>
+          <div className="pt-20">
+            <InlineContactForm />
+          </div>
         </section>
       </main>
 
