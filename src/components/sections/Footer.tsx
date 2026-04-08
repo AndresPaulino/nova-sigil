@@ -13,9 +13,8 @@ const NAV_LINKS = [
 ];
 
 const SOCIAL_LINKS = [
-  { label: "X / Twitter", href: "#" },
-  { label: "GitHub", href: "#" },
-  { label: "LinkedIn", href: "#" },
+  { label: "GitHub", href: "https://github.com/andrespaulino" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/andrespaulino" },
 ];
 
 export function Footer() {
