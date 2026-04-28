@@ -65,8 +65,16 @@ export function Footer() {
         <div className="mx-auto flex max-w-7xl flex-col items-start gap-12 md:flex-row md:justify-between">
           {/* LEFT — Branding */}
           <div className="max-w-xs">
-            <span className="font-headline text-xl font-bold text-heading">
-              Nova <span className="gold-gradient-text">Sigil</span>
+            <span className="flex items-center gap-2 font-headline text-xl font-bold text-heading">
+              <img
+                src="/logo/nova-sigil-mark.svg"
+                alt=""
+                aria-hidden="true"
+                className="h-6 w-auto"
+              />
+              <span>
+                Nova <span className="gold-gradient-text">Sigil</span>
+              </span>
             </span>
             <p className="mt-4 text-sm leading-relaxed text-body opacity-80">
               Custom software engineering for businesses that need it done right.

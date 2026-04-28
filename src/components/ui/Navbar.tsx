@@ -59,9 +59,17 @@ export function Navbar() {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: "smooth" });
           }}
-          className="text-2xl font-headline font-bold text-heading"
+          className="flex items-center gap-2 text-2xl font-headline font-bold text-heading"
         >
-          Nova <span className="gold-gradient-text">Sigil</span>
+          <img
+            src="/logo/nova-sigil-mark.svg"
+            alt=""
+            aria-hidden="true"
+            className="h-8 w-auto"
+          />
+          <span>
+            Nova <span className="gold-gradient-text">Sigil</span>
+          </span>
         </a>
 
         {/* Desktop nav links */}
