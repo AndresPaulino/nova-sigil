@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent, useEffect, useRef } from "react";
+import { type FormEvent, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -31,9 +31,34 @@ const formContainerVariants = {
 
 export function Contact() {
   const glowRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setStatus("sending");
+
+    const form = e.currentTarget;
+    const data = {
+      name: (form.elements.namedItem("name") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+    };
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) throw new Error("Request failed");
+
+      setStatus("sent");
+      form.reset();
+    } catch {
+      setStatus("error");
+    }
   };
 
   useEffect(() => {
@@ -188,14 +213,26 @@ export function Contact() {
 
               {/* Submit */}
               <motion.div variants={fieldVariants}>
-                <MagneticButton className="w-full" strength={0.15} radius={200}>
-                  <button
-                    type="submit"
-                    className="w-full rounded-md bg-accent py-5 text-lg font-bold text-black transition-all duration-300 hover:bg-accent-hover hover:shadow-[0_0_25px_rgba(200,168,78,0.3)]"
-                  >
-                    Send Message
-                  </button>
-                </MagneticButton>
+                {status === "sent" ? (
+                  <p className="py-5 text-center text-lg font-bold text-accent">
+                    Message sent — we&apos;ll be in touch within 24 hours.
+                  </p>
+                ) : (
+                  <MagneticButton className="w-full" strength={0.15} radius={200}>
+                    <button
+                      type="submit"
+                      disabled={status === "sending"}
+                      className="w-full rounded-md bg-accent py-5 text-lg font-bold text-black transition-all duration-300 hover:bg-accent-hover hover:shadow-[0_0_25px_rgba(200,168,78,0.3)] disabled:opacity-60 disabled:cursor-not-allowed"
+                    >
+                      {status === "sending" ? "Sending..." : "Send Message"}
+                    </button>
+                  </MagneticButton>
+                )}
+                {status === "error" && (
+                  <p className="mt-3 text-center text-sm text-red-400">
+                    Something went wrong. Please try again or email us directly.
+                  </p>
+                )}
               </motion.div>
             </motion.div>
           </form>
